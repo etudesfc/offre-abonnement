@@ -5,25 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ETUDES FC – Offre d'Abonnement</title>
 
-  <!-- =====================================================================
-    POLICE D'ICÔNES (Tabler Icons) — ne pas modifier
-  ====================================================================== -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.29.0/tabler-icons.min.css" />
 
   <style>
-
-    /* ===========================================================
-       RESET DE BASE — ne pas modifier
-    =========================================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; }
 
-    /* ===========================================================
-       FORMAT PAGE A4
-       Modifiez ici la taille et les marges de la page
-    =========================================================== */
     .page-a4 {
-      width:  210mm;
+      width: 210mm;
       min-height: 297mm;
       margin: 20px auto;
       background: #ffffff;
@@ -32,15 +21,6 @@
       overflow: hidden;
     }
 
-    /* ===========================================================
-       COULEURS PRINCIPALES — modifiez ici pour changer la charte
-       BLEU_FONCE  : bandeau header gauche
-       BLEU_MOYEN  : éléments actifs, boutons, titres
-       BLEU_CLAIR  : fonds, survols
-       VERT        : disponible / économies
-       ORANGE      : dispo partielle
-       ROUGE       : occupé
-    =========================================================== */
     :root {
       --bleu-fonce:  #0D3A6E;
       --bleu-moyen:  #185FA5;
@@ -55,921 +35,128 @@
       --texte:       #1A2636;
     }
 
-    /* ===========================================================
-       HEADER — bandeau en haut de page
-    =========================================================== */
-    .header {
-      display: flex;
-      background: var(--bleu-fonce);
-    }
+    .header { display: flex; background: var(--bleu-fonce); }
+    .header-left { flex: 1; padding: 22px 28px; }
+    .header-left .entreprise { font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; }
+    .header-left .activite { font-size: 13px; color: #A8C4E0; margin-top: 2px; }
+    .header-left .titre-offre { font-size: 14px; font-weight: 600; color: var(--bleu-clair); margin-top: 8px; }
+    .header-right { background: var(--bleu-moyen); padding: 22px 28px; display: flex; flex-direction: column; justify-content: center; gap: 4px; min-width: 240px; }
+    .header-right p { font-size: 13px; color: #ffffff; display: flex; align-items: center; gap: 8px; }
+    .header-right p i { color: #A8C4E0; font-size: 15px; }
 
-    .header-left {
-      flex: 1;
-      padding: 22px 28px;
-    }
-
-    .header-left .entreprise {
-      font-size: 26px;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.5px;
-    }
-
-    .header-left .activite {
-      font-size: 13px;
-      color: #A8C4E0;
-      margin-top: 2px;
-    }
-
-    .header-left .titre-offre {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--bleu-clair);
-      margin-top: 8px;
-    }
-
-    .header-right {
-      background: var(--bleu-moyen);
-      padding: 22px 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 4px;
-      min-width: 240px;
-    }
-
-    .header-right p {
-      font-size: 13px;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .header-right p i {
-      color: #A8C4E0;
-      font-size: 15px;
-    }
-
-    /* ===========================================================
-       NAVIGATION — onglets Tarifs / Disponibilités / Admin
-    =========================================================== */
-    .nav-tabs {
-      display: flex;
-      border-bottom: 1px solid var(--gris-bord);
-      padding: 0 24px;
-      background: #fff;
-    }
-
-    .nav-tab {
-      padding: 14px 20px;
-      font-size: 13px;
-      font-weight: 500;
-      border: none;
-      background: none;
-      cursor: pointer;
-      color: var(--gris-texte);
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      transition: color 0.15s;
-    }
-
+    .nav-tabs { display: flex; border-bottom: 1px solid var(--gris-bord); padding: 0 24px; background: #fff; }
+    .nav-tab { padding: 14px 20px; font-size: 13px; font-weight: 500; border: none; background: none; cursor: pointer; color: var(--gris-texte); border-bottom: 2px solid transparent; margin-bottom: -1px; display: flex; align-items: center; gap: 7px; transition: color 0.15s; }
     .nav-tab:hover { color: var(--bleu-moyen); }
+    .nav-tab.actif { color: var(--bleu-moyen); border-bottom: 2px solid var(--bleu-moyen); }
 
-    .nav-tab.actif {
-      color: var(--bleu-moyen);
-      border-bottom: 2px solid var(--bleu-moyen);
-    }
-
-    /* ===========================================================
-       CONTENU PRINCIPAL — zone sous les onglets
-    =========================================================== */
-    .contenu {
-      padding: 24px 28px 28px;
-    }
-
-    /* Affichage des panneaux par onglet */
+    .contenu { padding: 24px 28px 28px; }
     .panneau { display: none; }
     .panneau.actif { display: block; }
+    .titre-section { font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gris-texte); margin-bottom: 10px; }
 
-    /* Titre de section (ex: VOLUME MENSUEL D'HEURES) */
-    .titre-section {
-      font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--gris-texte);
-      margin-bottom: 10px;
-    }
+    /* Tarifs */
+    .grille-paliers { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 20px; }
+    .carte-palier { background: #fff; border: 1px solid var(--gris-bord); border-radius: 8px; padding: 14px 8px 12px; cursor: pointer; position: relative; text-align: center; transition: border-color 0.15s, box-shadow 0.15s; }
+    .carte-palier:hover { border-color: var(--bleu-moyen); box-shadow: 0 2px 8px rgba(24,95,165,0.1); }
+    .carte-palier.selectionne { border: 2px solid var(--bleu-moyen); background: var(--bleu-clair); }
+    .badge-recommande { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bleu-moyen); color: #fff; font-size: 9.5px; font-weight: 600; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+    .carte-palier .nb-heures { font-size: 22px; font-weight: 600; color: var(--texte); }
+    .carte-palier .nom-palier { font-size: 11px; color: var(--gris-texte); margin-bottom: 6px; }
+    .carte-palier .taux-horaire { font-size: 15px; font-weight: 600; color: var(--bleu-moyen); }
+    .carte-palier .taux-horaire span { font-size: 11px; font-weight: 400; color: var(--gris-texte); }
+    .carte-palier .base-mensuelle { font-size: 11px; color: var(--gris-texte); margin-top: 3px; }
 
-    /* ===========================================================
-       ONGLET TARIFS — grille des paliers
-    =========================================================== */
-
-    /* Grille des 6 cartes de palier */
-    .grille-paliers {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    /* Carte palier individuelle */
-    .carte-palier {
-      background: #fff;
-      border: 1px solid var(--gris-bord);
-      border-radius: 8px;
-      padding: 14px 8px 12px;
-      cursor: pointer;
-      position: relative;
-      text-align: center;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .carte-palier:hover {
-      border-color: var(--bleu-moyen);
-      box-shadow: 0 2px 8px rgba(24,95,165,0.1);
-    }
-
-    /* État sélectionné */
-    .carte-palier.selectionne {
-      border: 2px solid var(--bleu-moyen);
-      background: var(--bleu-clair);
-    }
-
-    /* Badge "Plus choisi" sur le palier recommandé */
-    .badge-recommande {
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--bleu-moyen);
-      color: #fff;
-      font-size: 9.5px;
-      font-weight: 600;
-      padding: 2px 9px;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
-
-    .carte-palier .nb-heures {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--texte);
-    }
-
-    .carte-palier .nom-palier {
-      font-size: 11px;
-      color: var(--gris-texte);
-      margin-bottom: 6px;
-    }
-
-    .carte-palier .taux-horaire {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--bleu-moyen);
-    }
-
-    .carte-palier .taux-horaire span {
-      font-size: 11px;
-      font-weight: 400;
-      color: var(--gris-texte);
-    }
-
-    .carte-palier .base-mensuelle {
-      font-size: 11px;
-      color: var(--gris-texte);
-      margin-top: 3px;
-    }
-
-    /* Grille des 4 boutons de durée */
-    .grille-durees {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .btn-duree {
-      border: 1px solid var(--gris-bord);
-      background: #fff;
-      border-radius: 7px;
-      padding: 10px 6px;
-      font-size: 13px;
-      cursor: pointer;
-      text-align: center;
-      color: var(--texte);
-      transition: border-color 0.15s;
-    }
-
+    .grille-durees { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
+    .btn-duree { border: 1px solid var(--gris-bord); background: #fff; border-radius: 7px; padding: 10px 6px; font-size: 13px; cursor: pointer; text-align: center; color: var(--texte); transition: border-color 0.15s; }
     .btn-duree:hover { border-color: var(--bleu-moyen); }
-
-    .btn-duree.actif {
-      border: 2px solid var(--bleu-moyen);
-      color: var(--bleu-moyen);
-      font-weight: 600;
-    }
-
-    .remise-label {
-      font-size: 10px;
-      margin-top: 3px;
-      color: var(--gris-texte);
-    }
-
+    .btn-duree.actif { border: 2px solid var(--bleu-moyen); color: var(--bleu-moyen); font-weight: 600; }
+    .remise-label { font-size: 10px; margin-top: 3px; color: var(--gris-texte); }
     .remise-label.avec-remise { color: #0F6E56; }
 
-    /* Boîte de résultat / récapitulatif */
-    .boite-resultat {
-      background: var(--gris-fond);
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin-bottom: 20px;
-      border: 1px solid var(--gris-bord);
-    }
-
-    .ligne-resultat {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 6px;
-    }
-
+    .boite-resultat { background: var(--gris-fond); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; border: 1px solid var(--gris-bord); }
+    .ligne-resultat { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
     .lbl-resultat { font-size: 13px; color: var(--gris-texte); }
-    .val-resultat  { font-size: 13px; font-weight: 500; color: var(--texte); }
-
-    .separateur-resultat {
-      border-top: 1px solid var(--gris-bord);
-      margin: 10px 0;
-    }
-
-    .ligne-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
+    .val-resultat { font-size: 13px; font-weight: 500; color: var(--texte); }
+    .separateur-resultat { border-top: 1px solid var(--gris-bord); margin: 10px 0; }
+    .ligne-total { display: flex; justify-content: space-between; align-items: baseline; }
     .lbl-total { font-size: 14px; font-weight: 600; color: var(--texte); }
-
-    .val-total {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--bleu-moyen);
-    }
-
-    .ligne-ttc {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-top: 4px;
-    }
-
+    .val-total { font-size: 26px; font-weight: 700; color: var(--bleu-moyen); }
+    .ligne-ttc { display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px; }
     .lbl-ttc { font-size: 12px; color: var(--gris-texte); }
-    .val-ttc  { font-size: 13px; color: var(--gris-texte); }
+    .val-ttc { font-size: 13px; color: var(--gris-texte); }
+    .mention-economie { font-size: 12px; color: #0F6E56; text-align: right; margin-top: 6px; }
+    .note-tva { font-size: 11px; color: var(--gris-texte); margin-top: 10px; font-style: italic; text-align: center; }
 
-    .mention-economie {
-      font-size: 12px;
-      color: #0F6E56;
-      text-align: right;
-      margin-top: 6px;
-    }
+    .grille-services { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 20px; }
+    .item-service { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--texte); font-weight: 500; }
+    .point-service { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    /* Note TVA */
-    .note-tva {
-      font-size: 11px;
-      color: var(--gris-texte);
-      margin-top: 10px;
-      font-style: italic;
-      text-align: center;
-    }
-
-    /* Liste des services inclus */
-    .grille-services {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
-      margin-bottom: 20px;
-    }
-
-    .item-service {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-size: 13px;
-      color: var(--texte);
-      font-weight: 500;
-    }
-
-    .point-service {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .etiquette-option {
-      font-size: 10px;
-      color: var(--gris-texte);
-      background: var(--gris-fond);
-      border-radius: 4px;
-      padding: 1px 6px;
-      margin-left: 3px;
-      font-weight: 400;
-    }
-
-    /* Bouton principal "Générer un devis" 
-    .btn-principal {
-      display: block;
-      width: 100%;
-      background: var(--bleu-moyen);
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      padding: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .btn-principal:hover { background: var(--bleu-fonce); }*/
-
-        /* ===========================================================
-       ONGLET DISPONIBILITÉS — calendrier
-    =========================================================== */
-
-    /* Barre supérieure : navigation mois + légende */
-    .entete-planning {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .nav-mois {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-nav-mois {
-      background: none;
-      border: 1px solid var(--gris-bord);
-      border-radius: 6px;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      color: var(--texte);
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.15s;
-    }
-
+    /* Planning */
+    .entete-planning { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .nav-mois { display: flex; align-items: center; gap: 12px; }
+    .btn-nav-mois { background: none; border: 1px solid var(--gris-bord); border-radius: 6px; width: 30px; height: 30px; cursor: pointer; color: var(--texte); font-size: 16px; display: flex; align-items: center; justify-content: center; transition: border-color 0.15s; }
     .btn-nav-mois:hover { border-color: var(--bleu-moyen); }
-
-    .label-mois {
-      font-size: 16px;
-      font-weight: 600;
-      min-width: 160px;
-      text-align: center;
-      color: var(--texte);
-    }
-
-    /* Légende couleurs */
-    .legende {
-      display: flex;
-      gap: 14px;
-      font-size: 12px;
-      color: var(--gris-texte);
-    }
-
+    .label-mois { font-size: 16px; font-weight: 600; min-width: 160px; text-align: center; color: var(--texte); }
+    .legende { display: flex; gap: 14px; font-size: 12px; color: var(--gris-texte); }
     .item-legende { display: flex; align-items: center; gap: 5px; }
+    .point-legende { width: 11px; height: 11px; border-radius: 3px; }
 
-    .point-legende {
-      width: 11px;
-      height: 11px;
-      border-radius: 3px;
-    }
-
-    /* Tableau calendrier */
-    .tableau-cal {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 14px;
-      table-layout: fixed;
-    }
-
-    .tableau-cal th {
-      font-size: 11px;
-      font-weight: 600;
-      text-align: center;
-      color: var(--gris-texte);
-      padding: 5px 2px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
+    .tableau-cal { width: 100%; border-collapse: collapse; margin-bottom: 14px; table-layout: fixed; }
+    .tableau-cal th { font-size: 11px; font-weight: 600; text-align: center; color: var(--gris-texte); padding: 5px 2px; text-transform: uppercase; letter-spacing: 0.04em; }
     .tableau-cal td { padding: 2px; text-align: center; }
-
-    .cellule-jour {
-      width: 100%;
-      height: 50px;
-      border-radius: 7px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      transition: background 0.1s;
-    }
-
+    .cellule-jour { width: 100%; height: 50px; border-radius: 7px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: background 0.1s; }
     .cellule-jour:hover:not(.hors-mois) { background: var(--gris-fond); }
-
-    .num-jour {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--texte);
-    }
-
+    .num-jour { font-size: 12px; font-weight: 600; color: var(--texte); }
     .hors-mois .num-jour { color: #C0C8D4; }
-
     .aujourdhui { border: 2px solid var(--bleu-moyen); }
+    .creneaux { display: flex; flex-direction: column; gap: 2px; margin-bottom: 2px; }
+    .creneaux-bloc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .creneau { width: 10px; height: 5px; border-radius: 2px; }
 
-    .creneaux {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      margin-bottom: 2px;
-    }
+    /* Bannière chargement planning */
+    .banniere-chargement { text-align: center; padding: 32px 0; font-size: 13px; color: var(--gris-texte); }
+    .banniere-chargement i { font-size: 24px; margin-bottom: 8px; display: block; animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-    .creneaux-bloc {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-    }
+    .compteur-charge { margin-bottom: 14px; background: var(--gris-fond); border: 1px solid var(--gris-bord); border-radius: 8px; padding: 12px 16px; }
+    .compteur-entete { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .compteur-label { font-size: 12px; font-weight: 600; color: var(--gris-texte); text-transform: uppercase; letter-spacing: 0.05em; }
+    .compteur-valeurs { display: flex; align-items: baseline; gap: 4px; }
+    .compteur-heures-occupees { font-size: 20px; font-weight: 700; }
+    .compteur-heures-max { font-size: 12px; color: var(--gris-texte); }
+    .compteur-heures-libres { font-size: 12px; font-weight: 500; color: var(--vert); margin-left: 8px; }
+    .barre-charge-fond { width: 100%; height: 10px; background: #E0E8F0; border-radius: 6px; overflow: hidden; }
+    .barre-charge-remplissage { height: 100%; border-radius: 6px; transition: width 0.4s ease; }
+    .compteur-detail { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--gris-texte); }
 
-    .creneau {
-      width: 10px;
-      height: 5px;
-      border-radius: 2px;
-    }
-
-    /* Compteur de charge mensuelle */
-    .compteur-charge {
-      margin-bottom: 14px;
-      background: var(--gris-fond);
-      border: 1px solid var(--gris-bord);
-      border-radius: 8px;
-      padding: 12px 16px;
-    }
-
-    .compteur-entete {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 8px;
-    }
-
-    .compteur-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--gris-texte);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .compteur-valeurs {
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-    }
-
-    .compteur-heures-occupees {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .compteur-heures-max {
-      font-size: 12px;
-      color: var(--gris-texte);
-    }
-
-    .compteur-heures-libres {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--vert);
-      margin-left: 8px;
-    }
-
-    .barre-charge-fond {
-      width: 100%;
-      height: 10px;
-      background: #E0E8F0;
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .barre-charge-remplissage {
-      height: 100%;
-      border-radius: 6px;
-      transition: width 0.4s ease;
-    }
-
-    .compteur-detail {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 6px;
-      font-size: 11px;
-      color: var(--gris-texte);
-    }
-
-    /* Barre de charge admin */
-    .compteur-charge-admin {
-      margin-bottom: 12px;
-      background: var(--gris-fond);
-      border: 1px solid var(--gris-bord);
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-
-    /* Note sous le calendrier */
-    .note-planning {
-      font-size: 12px;
-      color: var(--gris-texte);
-      padding-top: 12px;
-      border-top: 1px solid var(--gris-bord);
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-    }
-
-    /* Barre de contact en bas du planning */
-    .barre-contact {
-      background: var(--gris-fond);
-      border-radius: 7px;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 14px;
-      border: 1px solid var(--gris-bord);
-    }
-
+    .note-planning { font-size: 12px; color: var(--gris-texte); padding-top: 12px; border-top: 1px solid var(--gris-bord); display: flex; align-items: flex-start; gap: 6px; }
+    .barre-contact { background: var(--gris-fond); border-radius: 7px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 14px; border: 1px solid var(--gris-bord); }
     .barre-contact-texte { font-size: 13px; color: var(--gris-texte); line-height: 1.5; }
     .barre-contact-texte strong { color: var(--texte); }
-
-    .btn-contact {
-      background: var(--bleu-moyen);
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      padding: 8px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.15s;
-    }
-
+    .btn-contact { background: var(--bleu-moyen); color: #fff; border: none; border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
     .btn-contact:hover { background: var(--bleu-fonce); }
 
-    /* ===========================================================
-       ONGLET ADMIN — portail de connexion
-    =========================================================== */
-
-    /* Formulaire de connexion centré */
-    .portail-admin {
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .portail-admin .icone-verrou {
-      font-size: 36px;
-      color: var(--bleu-moyen);
-    }
-
-    .portail-admin h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-top: 12px;
-      color: var(--texte);
-    }
-
-    .portail-admin p {
-      font-size: 13px;
-      color: var(--gris-texte);
-      margin-top: 4px;
-    }
-
-    /* Champs identifiant / mot de passe */
-    .champs-connexion {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      margin: 20px 0;
-      max-width: 280px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .champ-login {
-      width: 100%;
-      padding: 10px 14px;
-      font-size: 14px;
-      border: 1px solid var(--gris-bord);
-      border-radius: 7px;
-      text-align: center;
-      background: #fff;
-      color: var(--texte);
-      outline: none;
-      transition: border-color 0.15s;
-    }
-
-    .champ-login:focus { border-color: var(--bleu-moyen); }
-
-    .btn-connexion {
-      width: 100%;
-      background: var(--bleu-moyen);
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      padding: 11px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .btn-connexion:hover { background: var(--bleu-fonce); }
-
-    .msg-erreur {
-      font-size: 13px;
-      color: #C0392B;
-      margin-top: 4px;
-      display: none;
-    }
-
-    /* Panneau admin déverrouillé */
-    .panneau-admin { display: none; }
-
-    .barre-admin-haut {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .barre-admin-haut h3 {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--texte);
-    }
-
-    .btn-deconnexion {
-      background: none;
-      border: 1px solid var(--gris-bord);
-      border-radius: 6px;
-      padding: 6px 14px;
-      font-size: 12px;
-      color: var(--gris-texte);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: border-color 0.15s;
-    }
-
-    .btn-deconnexion:hover { border-color: var(--rouge); color: var(--rouge); }
-
-    /* Statistiques du mois (3 cases) */
-    .stats-mois {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .carte-stat {
-      background: var(--gris-fond);
-      border-radius: 7px;
-      padding: 12px;
-      text-align: center;
-      border: 1px solid var(--gris-bord);
-    }
-
-    .chiffre-stat {
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    .libelle-stat {
-      font-size: 11px;
-      color: var(--gris-texte);
-      margin-top: 2px;
-    }
-
-    /* Navigation mois dans admin */
-    .nav-admin-mois {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .aide-admin {
-      font-size: 12px;
-      color: var(--gris-texte);
-    }
-
-    /* Outils de saisie (Libre / Partiel / Occupé) */
-    .outils-saisie {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn-outil {
-      border: 1px solid var(--gris-bord);
-      border-radius: 6px;
-      padding: 6px 14px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      background: #fff;
-      color: var(--texte);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: border-color 0.15s;
-    }
-
-    .btn-outil.outil-actif {
-      border: 2px solid var(--bleu-moyen);
-      background: var(--bleu-clair);
-    }
-
-    .puce-outil {
-      width: 10px;
-      height: 10px;
-      border-radius: 3px;
-    }
-
-    /* Tableau calendrier admin */
-    .tableau-admin {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 10px;
-      table-layout: fixed;
-    }
-
-    .tableau-admin th {
-      font-size: 11px;
-      font-weight: 600;
-      text-align: center;
-      color: var(--gris-texte);
-      padding: 4px 2px;
-      text-transform: uppercase;
-    }
-
-    .tableau-admin td { padding: 2px; }
-
-    .cellule-admin {
-      width: 100%;
-      height: 56px;
-      border-radius: 7px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      cursor: pointer;
-      border: 1px solid var(--gris-bord);
-      transition: border-color 0.1s, background 0.1s;
-    }
-
-    .cellule-admin:hover { border-color: var(--bleu-moyen); }
-    .cellule-admin.hors-mois-admin { opacity: 0.3; cursor: default; pointer-events: none; }
-    .cellule-admin.weekend { background: var(--gris-fond); cursor: default; }
-
-    .num-admin { font-size: 11px; font-weight: 600; color: var(--texte); }
-      
-    .creneaux-admin { 
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      margin-bottom: 2px;
-    }
-
-    .creneaux-admin-bloc {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-    }
-
-    .creneau-admin {
-      width: 11px;
-      height: 7px;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
-    }
-
-    .creneau-admin:hover {
-      opacity: 0.75;
-      transform: scaleY(1.2);
-    }
-
-    /* Barre de sauvegarde */
-    .barre-sauvegarde {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .msg-sauvegarde {
-      font-size: 12px;
-      color: #0F6E56;
-      display: none;
-      align-items: center;
-      gap: 5px;
-      font-weight: 500;
-    }
-
-    .btn-reinit {
-      background: none;
-      border: 1px solid var(--gris-bord);
-      border-radius: 6px;
-      padding: 8px 16px;
-      font-size: 13px;
-      cursor: pointer;
-      color: var(--gris-texte);
-      transition: border-color 0.15s;
-    }
-
-    .btn-reinit:hover { border-color: var(--rouge); color: var(--rouge); }
-
-    .btn-sauvegarder {
-      background: var(--bleu-moyen);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 20px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .btn-sauvegarder:hover { background: var(--bleu-fonce); }
-
-    /* Pied de page */
-    .pied-page {
-      border-top: 1px solid var(--gris-bord);
-      padding: 14px 28px;
-      font-size: 11px;
-      color: var(--gris-texte);
-      text-align: center;
-      background: var(--gris-fond);
-    }
-
+    .pied-page { border-top: 1px solid var(--gris-bord); padding: 14px 28px; font-size: 11px; color: var(--gris-texte); text-align: center; background: var(--gris-fond); }
   </style>
 </head>
 
 <body>
-
 <div class="page-a4">
 
-  <!-- =====================================================================
-     HEADER — Modifiez ici le nom, l'activité et les coordonnées
-  ====================================================================== -->
   <header class="header">
-
     <div class="header-left">
       <div class="entreprise">ETUDES FC</div>
       <div class="activite">Bureau d'études mécanique</div>
       <div class="titre-offre">Offre d'Abonnement</div>
     </div>
-
     <div class="header-right">
       <p><i class="ti ti-building"></i> SARL ETUDES FC</p>
       <p><i class="ti ti-phone"></i> 06 24 15 43 86</p>
       <p><i class="ti ti-mail"></i> f.croisant@etudesfc.fr</p>
       <p><i class="ti ti-user"></i> Frédéric CROISANT</p>
     </div>
-
   </header>
 
-  <!-- =====================================================================
-     NAVIGATION — onglets
-  ====================================================================== -->
   <nav class="nav-tabs">
     <button class="nav-tab actif" onclick="afficherOnglet('tarifs', this)">
       <i class="ti ti-receipt"></i> Tarifs
@@ -977,125 +164,55 @@
     <button class="nav-tab" onclick="afficherOnglet('planning', this)">
       <i class="ti ti-calendar"></i> Disponibilités
     </button>
-    <button class="nav-tab" onclick="afficherOnglet('admin', this)">
-      <i class="ti ti-shield-lock"></i> Admin
-    </button>
   </nav>
 
-  <!-- =====================================================================
-     CONTENU PRINCIPAL
-  ====================================================================== -->
   <div class="contenu">
 
-    <!-- =================================================================
-       ONGLET TARIFS
-    ================================================================== -->
+    <!-- ONGLET TARIFS -->
     <div id="panneau-tarifs" class="panneau actif">
-
       <p class="titre-section">Volume mensuel d'heures</p>
-      <div class="grille-paliers" id="grille-paliers">
-        <!-- Rempli dynamiquement par JavaScript -->
-      </div>
+      <div class="grille-paliers" id="grille-paliers"></div>
 
       <p class="titre-section">Durée d'engagement</p>
-      <div class="grille-durees" id="grille-durees">
-        <!-- Rempli dynamiquement par JavaScript -->
-      </div>
+      <div class="grille-durees" id="grille-durees"></div>
 
-      <div class="boite-resultat" id="boite-resultat">
-        <!-- Rempli dynamiquement par JavaScript -->
-      </div>
+      <div class="boite-resultat" id="boite-resultat"></div>
 
       <p class="titre-section">Services inclus dans l'abonnement</p>
       <div class="grille-services">
-        <div class="item-service">
-          <div class="point-service" style="background: var(--vert)"></div>
-          Conception &amp; dimensionnement
-        </div>
-        <div class="item-service">
-          <div class="point-service" style="background: var(--vert)"></div>
-          Modélisation 3D (CAO)
-        </div>
-        <div class="item-service">
-          <div class="point-service" style="background: var(--vert)"></div>
-          Mise en plan 2D &amp; plans de fab.
-        </div>
-        <div class="item-service">
-          <div class="point-service" style="background: var(--vert)"></div>
-          Visuels &amp; réalité augmentée
-        </div>
-        <div class="item-service">
-          <div class="point-service" style="background: var(--vert)"></div>
-          Rédaction documentaire
-        </div>
-        <div class="item-service">
-          <div class="point-service" style="background: var(--vert)"></div>
-          Support industrialisation
-          <!-- <span class="etiquette-option">option</span> --> 
-        </div>
-        <div class="item-service">
-          <div class="point-service" style="background: var(--vert)"></div>
-          Gestion de projet
-          <!-- <span class="etiquette-option">option</span> -->
-        </div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Conception &amp; dimensionnement</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Modélisation 3D (CAO)</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Mise en plan 2D &amp; plans de fab.</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Visuels &amp; réalité augmentée</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Rédaction documentaire</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Support industrialisation</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Gestion de projet</div>
       </div>
+    </div>
 
-      <!-- <button class="btn-principal" onclick="alert('Fonctionnalité à connecter à votre système de devis.')">
-        Générer un devis ↗
-      </button>
-
-      <p class="note-tva">* TVA 20% applicable. Les montants TTC sont indiqués à titre indicatif.</p> -->
-
-    </div><!-- fin onglet tarifs -->
-
-
-    <!-- =================================================================
-       ONGLET DISPONIBILITÉS
-    ================================================================== -->
+    <!-- ONGLET DISPONIBILITÉS -->
     <div id="panneau-planning" class="panneau">
-
       <div class="entete-planning">
         <div class="nav-mois">
-          <button class="btn-nav-mois" onclick="changerMois(-1)" aria-label="Mois précédent">
-            <i class="ti ti-chevron-left"></i>
-          </button>
+          <button class="btn-nav-mois" onclick="changerMois(-1)" aria-label="Mois précédent"><i class="ti ti-chevron-left"></i></button>
           <div class="label-mois" id="label-mois-client"></div>
-          <button class="btn-nav-mois" onclick="changerMois(1)" aria-label="Mois suivant">
-            <i class="ti ti-chevron-right"></i>
-          </button>
+          <button class="btn-nav-mois" onclick="changerMois(1)" aria-label="Mois suivant"><i class="ti ti-chevron-right"></i></button>
         </div>
         <div class="legende">
-          <div class="item-legende">
-            <div class="point-legende" style="background: var(--vert)"></div> Disponible
-          </div>
-          <div class="item-legende">
-            <div class="point-legende" style="background: var(--orange)"></div> Partiel
-          </div>
-          <div class="item-legende">
-            <div class="point-legende" style="background: var(--rouge)"></div> Occupé
-          </div>
-          <div class="item-legende">
-            <div class="point-legende" style="background: var(--gris-bord)"></div> W-E / Férié
-          </div>
+          <div class="item-legende"><div class="point-legende" style="background: var(--vert)"></div> Disponible</div>
+          <div class="item-legende"><div class="point-legende" style="background: var(--orange)"></div> Partiel</div>
+          <div class="item-legende"><div class="point-legende" style="background: var(--rouge)"></div> Occupé</div>
+          <div class="item-legende"><div class="point-legende" style="background: var(--gris-bord)"></div> W-E / Férié</div>
         </div>
       </div>
 
-      <table class="tableau-cal">
-        <thead>
-          <tr>
-            <th>Lun</th>
-            <th>Mar</th>
-            <th>Mer</th>
-            <th>Jeu</th>
-            <th>Ven</th>
-            <th style="color: #C0C8D4">Sam</th>
-            <th style="color: #C0C8D4">Dim</th>
-          </tr>
-        </thead>
-        <tbody id="corps-cal-client"></tbody>
-      </table>
+      <div id="zone-calendrier">
+        <div class="banniere-chargement">
+          <i class="ti ti-loader-2"></i>
+          Chargement du planning…
+        </div>
+      </div>
 
-      <!-- Compteur de charge mensuelle -->
       <div class="compteur-charge" id="compteur-charge"></div>
 
       <div class="note-planning">
@@ -1113,450 +230,117 @@
           Prendre contact ↗
         </button>
       </div>
+    </div>
 
-    </div><!-- fin onglet planning -->
+  </div>
 
-
-    <!-- =================================================================
-       ONGLET ADMIN
-    ================================================================== -->
-    <div id="panneau-admin" class="panneau">
-
-      <!-- Formulaire de connexion -->
-      <div class="portail-admin" id="portail-connexion">
-        <i class="ti ti-shield-lock icone-verrou"></i>
-        <h3>Accès administrateur</h3>
-        <p>Identifiez-vous pour gérer le planning</p>
-
-        <div class="champs-connexion">
-          <input
-            type="text"
-            id="champ-identifiant"
-            class="champ-login"
-            placeholder="Identifiant"
-            autocomplete="username"
-            onkeydown="if(event.key==='Enter') document.getElementById('champ-motdepasse').focus()"
-          />
-          <input
-            type="password"
-            id="champ-motdepasse"
-            class="champ-login"
-            placeholder="Mot de passe"
-            autocomplete="current-password"
-            onkeydown="if(event.key==='Enter') seConnecter()"
-          />
-          <button class="btn-connexion" onclick="seConnecter()">
-            <i class="ti ti-login"></i> Se connecter
-          </button>
-        </div>
-
-        <div class="msg-erreur" id="msg-erreur-connexion">
-          Identifiant ou mot de passe incorrect.
-        </div>
-      </div>
-
-      <!-- Panneau admin (visible après connexion) -->
-      <div class="panneau-admin" id="panneau-admin-connecte">
-
-        <div class="barre-admin-haut">
-          <h3><i class="ti ti-calendar-stats"></i> Gestion du planning</h3>
-          <button class="btn-deconnexion" onclick="seDeconnecter()">
-            <i class="ti ti-logout"></i> Déconnexion
-          </button>
-        </div>
-
-        <!-- Statistiques du mois affiché -->
-        <div class="stats-mois" id="stats-mois"></div>
-
-        <!-- Navigation mois + aide -->
-        <div class="nav-admin-mois">
-          <div class="nav-mois">
-            <button class="btn-nav-mois" onclick="changerMoisAdmin(-1)">
-              <i class="ti ti-chevron-left"></i>
-            </button>
-            <div class="label-mois" id="label-mois-admin"></div>
-            <button class="btn-nav-mois" onclick="changerMoisAdmin(1)">
-              <i class="ti ti-chevron-right"></i>
-            </button>
-          </div>
-          <div class="aide-admin">Cliquez sur un créneau pour modifier</div>
-        </div>
-
-        <!-- Outils de saisie -->
-        <div class="outils-saisie" id="outils-saisie"></div>
-
-        <!-- Calendrier admin -->
-        <table class="tableau-admin">
-          <thead>
-            <tr>
-              <th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th>
-              <th style="color: #C0C8D4">Sam</th>
-              <th style="color: #C0C8D4">Dim</th>
-            </tr>
-          </thead>
-          <tbody id="corps-cal-admin"></tbody>
-        </table>
-
-        <!-- Compteur de charge mensuelle -->
-        <div class="compteur-charge compteur-charge-admin" id="compteur-charge-admin"></div>
-
-        <!-- Sauvegarde -->
-        <div class="barre-sauvegarde">
-          <div class="msg-sauvegarde" id="msg-sauvegarde">
-            <i class="ti ti-check"></i> Planning sauvegardé avec succès
-          </div>
-          <button class="btn-reinit" onclick="reinitialiserMois()">
-            Réinitialiser le mois
-          </button>
-          <button class="btn-sauvegarder" onclick="sauvegarderPlanning()">
-            <i class="ti ti-device-floppy"></i> Enregistrer
-          </button>
-        </div>
-
-      </div><!-- fin panneau-admin-connecte -->
-
-    </div><!-- fin onglet admin -->
-
-  </div><!-- fin contenu -->
-
-  <!-- =====================================================================
-     PIED DE PAGE
-  ====================================================================== -->
   <footer class="pied-page">
     ETUDES FC · Frédéric Croisant · f.croisant@etudesfc.fr · 06 24 15 43 86 ·
     Devis personnalisé sous 24/48h
   </footer>
 
-</div><!-- fin page-a4 -->
+</div>
 
-
-<!-- =========================================================================
-   JAVASCRIPT — Logique de l'application
-   =========================================================================
-
-   ╔══════════════════════════════════════════════════════════════╗
-   ║  ZONE DE CONFIGURATION — MODIFIEZ UNIQUEMENT CE BLOC        ║
-   ╚══════════════════════════════════════════════════════════════╝
--->
 <script>
 
-  /* ------------------------------------------------------------------
-     🔐 ACCÈS ADMIN — changez identifiant et mot de passe ici
-  ------------------------------------------------------------------ */
-  const ADMIN_IDENTIFIANT = "frederic";   // ← modifiez l'identifiant
-  const ADMIN_MOT_DE_PASSE = "etudesfc2024"; // ← modifiez le mot de passe
-
-  /* ------------------------------------------------------------------
-     💶 PALIERS DE TARIFICATION
-     Modifiez les champs :
-       h     = nombre d'heures par mois
-       taux  = tarif horaire HT en euros
-       nom   = nom du palier
-       pop   = true = affiche le badge "Plus choisi" (1 seul à la fois)
-  ------------------------------------------------------------------ */
+  /* ==============================================================
+     CONFIGURATION TARIFS — modifiez uniquement ce bloc
+  ============================================================== */
   const PALIERS = [
-    { h: 20,  taux: 40, nom: "Starter", pop: false },
+    { h: 20,  taux: 40, nom: "Starter",   pop: false },
     { h: 40,  taux: 38, nom: "Essentiel", pop: false },
-    { h: 60,  taux: 36, nom: "Régulier", pop: false  }, // ← le plus populaire
-    { h: 80,  taux: 35, nom: "Complet", pop: false },
-    { h: 100, taux: 34, nom: "Intensif", pop: false },
-    { h: 130, taux: 33, nom: "Maximum", pop: false },
+    { h: 60,  taux: 36, nom: "Régulier",  pop: false },
+    { h: 80,  taux: 35, nom: "Complet",   pop: false },
+    { h: 100, taux: 34, nom: "Intensif",  pop: false },
+    { h: 130, taux: 33, nom: "Maximum",   pop: false },
   ];
 
-  /* ------------------------------------------------------------------
-     📅 DURÉES D'ENGAGEMENT
-     Modifiez les champs :
-       label  = texte affiché sur le bouton
-       mois   = nombre de mois
-       remise = réduction en % sur le total de la période
-  ------------------------------------------------------------------ */
   const DUREES = [
-    { label: "1 mois",   mois: 1,  remise: 0  },
-    { label: "3 mois",   mois: 3,  remise: 2  },
-    { label: "6 mois",   mois: 6,  remise: 4  },
-    { label: "12 mois",  mois: 12, remise: 8 },
+    { label: "1 mois",  mois: 1,  remise: 0 },
+    { label: "3 mois",  mois: 3,  remise: 2 },
+    { label: "6 mois",  mois: 6,  remise: 4 },
+    { label: "12 mois", mois: 12, remise: 8 },
   ];
 
-  /* ------------------------------------------------------------------
-     📊 TVA — modifiez le taux si besoin
-  ------------------------------------------------------------------ */
-  const TAUX_TVA = 0.20; // 20%
+  const TAUX_TVA = 0.20;
 
-  /* ================================================================
-     FIN DE LA ZONE DE CONFIGURATION
-     ⚠️  Ne modifiez pas le code en dessous sauf si vous savez
-         ce que vous faites.
-  ================================================================ */
+  /*
+   * URL du fichier planning.json publié par l'outil admin.
+   * Remplacez par votre URL GitHub Pages réelle, par exemple :
+   * https://votre-compte.github.io/votre-depot/planning.json
+   */
+  const URL_PLANNING = "planning.json";
 
+  /* ==============================================================
+     FIN CONFIGURATION
+  ============================================================== */
 
-  /* ------------------------------------------------------------------
-     État de l'interface
-  ------------------------------------------------------------------ */
-  let palierSelectionne = 2;  // index du palier sélectionné (0 = premier)
-  let dureeSelectionnee = 0;  // index de la durée sélectionnée
-  let outilAdmin = "free";    // outil actif dans le panneau admin
-
-  // Dates de navigation des calendriers
+  let palierSelectionne = 2;
+  let dureeSelectionnee = 0;
   let dateMoisClient = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-  let dateMoisAdmin  = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-
-  // Données du planning : objet { "2026-4": { 1: "free", 2: "busy", ... } }
   let donneesCal = {};
+  const MAX_HEURES = 130;
 
-  /* ------------------------------------------------------------------
-     Gestion du stockage (sauvegarde entre sessions)
-  ------------------------------------------------------------------ */
-  function cle(annee, mois) {
-    return annee + "-" + mois;
-  }
+  /* --- Utilitaires calendrier --- */
+  function cle(a, m) { return a + "-" + m; }
 
-  function lireCreneauCal(annee, mois, jour) {
-    // Retourne un état synthétique pour la compatibilité des stats
-    const slots = lireSlots(annee, mois, jour);
-    const libres = slots.filter(s => s === 1).length;
-    if (libres === 8) return "free";
-    if (libres === 0) return "busy";
-    return "partial";
-  }
-
-  function ecrireCreneauCal(annee, mois, jour, valeur) {
-    // Écriture batch pour compatibilité (admin clic-jour)
-    if (!donneesCal[cle(annee, mois)]) donneesCal[cle(annee, mois)] = {};
-    if (valeur === "free") donneesCal[cle(annee, mois)][jour] = [1,1,1,1,1,1,1,1];
-    else                   donneesCal[cle(annee, mois)][jour] = [0,0,0,0,0,0,0,0];
-  }
-
-  async function chargerSauvegarde() {
-    try {
-      if (window.storage) {
-        const r = await window.storage.get("etudesfc_cal");
-        if (r && r.value) donneesCal = JSON.parse(r.value);
-      }
-    } catch (e) { /* pas de sauvegarde trouvée, on continue */ }
-  }
-
-  /* ------------------------------------------------------------------
-     Données de démonstration (mois courant)
-  ------------------------------------------------------------------ */
-  function initialiserDemonstration() {
-    const maintenant = new Date();
-    const k = cle(maintenant.getFullYear(), maintenant.getMonth());
-    // Exemple : quelques jours pré-remplis pour illustrer le planning
-    donneesCal[k] = {
-      2:  [1,1,1,1, 1,1,1,1],
-      3:  [1,1,1,1, 1,1,1,1],
-      4:  [1,1,1,1, 0,0,0,0],
-      5:  [1,1,1,1, 1,1,1,1],
-      9:  [0,0,0,0, 0,0,0,0],
-      10: [0,0,0,0, 0,0,0,0],
-      11: [0,0,0,0, 1,1,1,1],
-      12: [1,1,1,1, 1,1,1,1],
-      16: [1,1,1,1, 1,1,1,1],
-      17: [1,1,1,1, 1,1,1,1],
-      18: [1,1,1,1, 1,1,1,1],
-      19: [1,1,1,1, 0,0,0,1],
-      23: [0,0,0,0, 0,0,0,0],
-      24: [1,1,1,1, 1,1,1,1],
-      25: [1,1,1,1, 1,1,1,1],
-    };
-  }
-
-  /* ------------------------------------------------------------------
-     Couleurs des créneaux
-  ------------------------------------------------------------------ */
-  // Couleur d'un créneau : 1 = libre (vert), 0 = occupé (rouge), -1 = off (gris)
-  function couleurCreneau(val) {
-    if (val === 1)  return "var(--vert)";
-    if (val === 0)  return "var(--rouge)";
-    return "var(--gris-bord)"; // week-end / off
-  }
-
-  // Retourne un tableau de 8 valeurs pour un jour donné
   function lireSlots(annee, mois, jour) {
     const val = (donneesCal[cle(annee, mois)] || {})[jour];
     if (Array.isArray(val)) return val;
-    // Compatibilité anciens formats string
     if (val === "busy")       return [0,0,0,0,0,0,0,0];
     if (val === "partial-am") return [1,1,1,1,0,0,0,0];
     if (val === "partial-pm") return [0,0,0,0,1,1,1,1];
-    return [1,1,1,1,1,1,1,1]; // free par défaut
+    return [1,1,1,1,1,1,1,1];
   }
 
-  // Écrit un seul créneau dans le tableau
-  function ecrireSlot(annee, mois, jour, index, valeur) {
-    if (!donneesCal[cle(annee, mois)]) donneesCal[cle(annee, mois)] = {};
-    const slots = lireSlots(annee, mois, jour);
-    slots[index] = valeur;
-    donneesCal[cle(annee, mois)][jour] = slots;
+  function couleurCreneau(v) {
+    if (v === 1)  return "var(--vert)";
+    if (v === 0)  return "var(--rouge)";
+    return "var(--gris-bord)";
   }
 
-  const ETATS_ADMIN = ["free", "busy"];
-
-  const LIBELLES_ETATS = {
-    "free": "Libre",
-    "busy": "Occupé",
-  };
-
-  const COULEURS_OUTILS = {
-    "free": "var(--vert)",
-    "busy": "var(--rouge)",
-  };
-
-  /* ==================================================================
-     RENDU DE L'ONGLET TARIFS
-  ================================================================== */
-
-  function afficherPaliers() {
-    const grille = document.getElementById("grille-paliers");
-    grille.innerHTML = PALIERS.map((p, i) => {
-      const estSelectionne = i === palierSelectionne;
-      const estPopulaire   = p.pop && !estSelectionne;
-      return `
-        <div
-          class="carte-palier ${estSelectionne ? "selectionne" : ""}"
-          onclick="selectionnerPalier(${i})"
-          title="Sélectionner le palier ${p.nom}"
-        >
-          ${p.pop ? '<div class="badge-recommande">Plus choisi</div>' : ""}
-          <div class="nb-heures">${p.h}h</div>
-          <div class="nom-palier">${p.nom}</div>
-          <div class="taux-horaire">${p.taux}€<span> /h HT</span></div>
-          <div class="base-mensuelle">${(p.h * p.taux).toLocaleString("fr-FR")} €/mois</div>
-        </div>
-      `;
-    }).join("");
+  /* --- Chargement planning depuis JSON --- */
+  async function chargerPlanning() {
+    try {
+      const r = await fetch(URL_PLANNING + "?t=" + Date.now());
+      if (r.ok) {
+        donneesCal = await r.json();
+      }
+    } catch (e) {
+      // Fichier absent ou hors-ligne : planning vide, pas d'erreur bloquante
+    }
+    afficherCalendrierClient();
   }
 
-  function afficherDurees() {
-    const grille = document.getElementById("grille-durees");
-    grille.innerHTML = DUREES.map((d, i) => `
-      <button
-        class="btn-duree ${i === dureeSelectionnee ? "actif" : ""}"
-        onclick="selectionnerDuree(${i})"
-      >
-        ${d.label}
-        <div class="remise-label ${d.remise > 0 ? "avec-remise" : ""}">
-          ${d.remise > 0 ? "-" + d.remise + "% sur le total" : "Tarif plein"}
-        </div>
-      </button>
-    `).join("");
-  }
-
-  function afficherResultat() {
-    const p = PALIERS[palierSelectionne];
-    const d = DUREES[dureeSelectionnee];
-
-    // Calcul : base mensuelle * nombre de mois = total brut
-    // Puis on applique la remise sur le total
-    const totalBrut   = p.h * p.taux * d.mois;
-    const totalHT     = Math.round(totalBrut * (1 - d.remise / 100));
-    const mensualiteHT  = Math.round(totalHT / d.mois);
-    const mensualiteTTC = Math.round(mensualiteHT * (1 + TAUX_TVA));
-    const totalTTC    = mensualiteHT * d.mois * (1 + TAUX_TVA);
-    const economie    = d.remise > 0 ? Math.round(totalBrut - totalHT) : 0;
-
-    document.getElementById("boite-resultat").innerHTML = `
-      <div class="ligne-resultat">
-        <span class="lbl-resultat">Palier sélectionné</span>
-        <span class="val-resultat">${p.h}h/mois · ${p.taux} € HT/h</span>
-      </div>
-      <div class="ligne-resultat">
-        <span class="lbl-resultat">Engagement</span>
-        <span class="val-resultat">
-          ${d.label}${d.remise > 0 ? " &nbsp;·&nbsp; −" + d.remise + "% sur le total" : ""}
-        </span>
-      </div>
-      <div class="separateur-resultat"></div>
-      <div class="ligne-total">
-        <span class="lbl-total">Mensualité HT</span>
-        <span class="val-total">${mensualiteHT.toLocaleString("fr-FR")} €</span>
-      </div>
-      <div class="ligne-ttc">
-        <span class="lbl-ttc">soit ${mensualiteTTC.toLocaleString("fr-FR")} € TTC / mois</span>
-        ${d.mois > 1
-          ? `<span class="val-ttc">Total ${d.mois} mois : ${totalHT.toLocaleString("fr-FR")} € HT</span>`
-          : ""}
-      </div>
-      ${economie > 0
-        ? `<div class="mention-economie">
-            <i class="ti ti-piggy-bank"></i>
-            Économie sur la période : ${economie.toLocaleString("fr-FR")} €
-           </div>`
-        : ""}
-      <div class="separateur-resultat"></div>
-      <p class="note-tva">* TVA 20% applicable. Les montants TTC sont indiqués à titre indicatif.</p>
-    `;
-  }
-
-  function selectionnerPalier(i) {
-    palierSelectionne = i;
-    afficherPaliers();
-    afficherResultat();
-  }
-
-  function selectionnerDuree(i) {
-    dureeSelectionnee = i;
-    afficherDurees();
-    afficherResultat();
-  }
-
-  /* ==================================================================
-     RENDU DES CALENDRIERS (client + admin)
-  ================================================================== */
-
-  /**
-   * Construit les lignes HTML d'un calendrier mensuel.
-   * @param {number} annee
-   * @param {number} mois  (0 = janvier)
-   * @param {function} rendreCellule  - retourne le HTML d'une cellule
-   */
+  /* --- Calendrier client --- */
   function construireCorpsCalendrier(annee, mois, rendreCellule) {
     const premierJour = new Date(annee, mois, 1);
-    let jourSemaine   = premierJour.getDay();
-    jourSemaine       = (jourSemaine + 6) % 7; // lundi = 0
-
+    let jourSemaine = (premierJour.getDay() + 6) % 7;
     const nbJours     = new Date(annee, mois + 1, 0).getDate();
     const nbJoursPrev = new Date(annee, mois, 0).getDate();
     const aujourdhui  = new Date();
+    let html = "", cellule = 0, ligne = "<tr>";
 
-    let html = "";
-    let cellule = 0;
-    let ligne = "<tr>";
-
-    // Jours du mois précédent (remplissage)
     for (let i = 0; i < jourSemaine; i++) {
       ligne += `<td>${rendreCellule(nbJoursPrev - jourSemaine + 1 + i, true, false, annee, mois)}</td>`;
       cellule++;
     }
-
-    // Jours du mois en cours
     for (let j = 1; j <= nbJours; j++) {
-      const estWeekend = [0, 6].includes(new Date(annee, mois, j).getDay());
-      const estAujHui  = aujourdhui.getDate() === j
-                      && aujourdhui.getMonth() === mois
-                      && aujourdhui.getFullYear() === annee;
-
-      ligne += `<td>${rendreCellule(j, false, estWeekend, annee, mois, estAujHui)}</td>`;
+      const we = [0, 6].includes(new Date(annee, mois, j).getDay());
+      const auj = aujourdhui.getDate()===j && aujourdhui.getMonth()===mois && aujourdhui.getFullYear()===annee;
+      ligne += `<td>${rendreCellule(j, false, we, annee, mois, auj)}</td>`;
       cellule++;
-
-      if (cellule % 7 === 0) {
-        html += ligne + "</tr>";
-        ligne = "<tr>";
-      }
+      if (cellule % 7 === 0) { html += ligne + "</tr>"; ligne = "<tr>"; }
     }
-
-    // Jours du mois suivant (remplissage)
     let extra = 1;
     while (cellule % 7 !== 0) {
       ligne += `<td>${rendreCellule(extra++, true, false, annee, mois)}</td>`;
       cellule++;
     }
     if (ligne !== "<tr>") html += ligne + "</tr>";
-
     return html;
   }
 
-  /* --- Calendrier client --- */
   function afficherCalendrierClient() {
     const annee = dateMoisClient.getFullYear();
     const mois  = dateMoisClient.getMonth();
@@ -1565,292 +349,120 @@
       dateMoisClient.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })
                     .replace(/^\w/, c => c.toUpperCase());
 
-    document.getElementById("corps-cal-client").innerHTML =
-      construireCorpsCalendrier(annee, mois, (j, horsM, we, an, mo, aujHui) => {
-        if (horsM) {
-          return `<div class="cellule-jour hors-mois"><div class="num-jour">${j}</div></div>`;
-        }
-        const slots = we ? [-1,-1,-1,-1,-1,-1,-1,-1] : lireSlots(an, mo, j);
-        const bloc1 = slots.slice(0,4).map(v => `<div class="creneau" style="background:${couleurCreneau(we ? -1 : v)}"></div>`).join("");
-        const bloc2 = slots.slice(4,8).map(v => `<div class="creneau" style="background:${couleurCreneau(we ? -1 : v)}"></div>`).join("");
-        return `
-          <div class="cellule-jour ${aujHui ? "aujourdhui" : ""}">
-            <div class="num-jour">${j}</div>
-            <div class="creneaux">
-              <div class="creneaux-bloc">${bloc1}</div>
-              <div class="creneaux-bloc">${bloc2}</div>
-            </div>
-          </div>`;
-      });
+    const corps = construireCorpsCalendrier(annee, mois, (j, horsM, we, an, mo, auj) => {
+      if (horsM) return `<div class="cellule-jour hors-mois"><div class="num-jour">${j}</div></div>`;
+      const slots = we ? [-1,-1,-1,-1,-1,-1,-1,-1] : lireSlots(an, mo, j);
+      const b1 = slots.slice(0,4).map(v => `<div class="creneau" style="background:${couleurCreneau(we?-1:v)}"></div>`).join("");
+      const b2 = slots.slice(4,8).map(v => `<div class="creneau" style="background:${couleurCreneau(we?-1:v)}"></div>`).join("");
+      return `<div class="cellule-jour ${auj?"aujourdhui":""}">
+        <div class="num-jour">${j}</div>
+        <div class="creneaux">
+          <div class="creneaux-bloc">${b1}</div>
+          <div class="creneaux-bloc">${b2}</div>
+        </div>
+      </div>`;
+    });
+
+    document.getElementById("zone-calendrier").innerHTML = `
+      <table class="tableau-cal">
+        <thead><tr>
+          <th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th>
+          <th style="color:#C0C8D4">Sam</th><th style="color:#C0C8D4">Dim</th>
+        </tr></thead>
+        <tbody>${corps}</tbody>
+      </table>`;
 
     afficherCompteurCharge(annee, mois);
   }
 
-  const MAX_HEURES = 130;
-
-  function calculerHeuresMois(annee, mois) {
+  function afficherCompteurCharge(annee, mois) {
+    const el = document.getElementById("compteur-charge");
+    if (!el) return;
     const nbJours = new Date(annee, mois + 1, 0).getDate();
     let occupes = 0, libres = 0;
     for (let j = 1; j <= nbJours; j++) {
       if ([0, 6].includes(new Date(annee, mois, j).getDay())) continue;
-      const slots = lireSlots(annee, mois, j);
-      slots.forEach(v => {
-        if (v === 0) occupes++;
-        else if (v === 1) libres++;
-      });
+      lireSlots(annee, mois, j).forEach(v => { if (v===0) occupes++; else if (v===1) libres++; });
     }
-    // chaque créneau = 1h
-    return { occupes, libres };
-  }
-
-  function afficherCompteurCharge(annee, mois, elementId = "compteur-charge") {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    const { occupes, libres } = calculerHeuresMois(annee, mois);
-    const total = occupes + libres;
-    const pct   = Math.min(100, Math.round((occupes / MAX_HEURES) * 100));
-
-    // Couleur progressive : vert → orange → rouge
-    let couleur;
-    if (pct < 60)       couleur = "var(--vert)";
-    else if (pct < 85)  couleur = "var(--orange)";
-    else                couleur = "var(--rouge)";
-
-    const heuresLibresAffichees = Math.max(0, MAX_HEURES - occupes);
-
+    const pct = Math.min(100, Math.round((occupes / MAX_HEURES) * 100));
+    const couleur = pct < 60 ? "var(--vert)" : pct < 85 ? "var(--orange)" : "var(--rouge)";
     el.innerHTML = `
       <div class="compteur-entete">
         <span class="compteur-label"><i class="ti ti-chart-bar"></i> Charge du mois</span>
         <div class="compteur-valeurs">
           <span class="compteur-heures-occupees" style="color:${couleur}">${occupes}h</span>
           <span class="compteur-heures-max">/ ${MAX_HEURES}h max</span>
-          <span class="compteur-heures-libres">· ${heuresLibresAffichees}h disponibles</span>
+          <span class="compteur-heures-libres">· ${Math.max(0,MAX_HEURES-occupes)}h disponibles</span>
         </div>
       </div>
-      <div class="barre-charge-fond">
-        <div class="barre-charge-remplissage" style="width:${pct}%; background:${couleur}"></div>
-      </div>
-      <div class="compteur-detail">
-        <span>${pct}% de capacité utilisée</span>
-        <span>${libres}h de créneaux libres planifiés</span>
-      </div>
-    `;
+      <div class="barre-charge-fond"><div class="barre-charge-remplissage" style="width:${pct}%;background:${couleur}"></div></div>
+      <div class="compteur-detail"><span>${pct}% de capacité utilisée</span><span>${libres}h de créneaux libres planifiés</span></div>`;
   }
 
-  function changerMois(direction) {
-    dateMoisClient.setMonth(dateMoisClient.getMonth() + direction);
+  function changerMois(d) {
+    dateMoisClient.setMonth(dateMoisClient.getMonth() + d);
     afficherCalendrierClient();
   }
 
-  /* --- Calendrier admin --- */
-  function afficherCalendrierAdmin() {
-    const annee = dateMoisAdmin.getFullYear();
-    const mois  = dateMoisAdmin.getMonth();
-
-    document.getElementById("label-mois-admin").textContent =
-      dateMoisAdmin.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })
-                   .replace(/^\w/, c => c.toUpperCase());
-
-    afficherStatsAdmin(annee, mois);
-    afficherCompteurCharge(annee, mois, "compteur-charge-admin");
-
-    document.getElementById("corps-cal-admin").innerHTML =
-      construireCorpsCalendrier(annee, mois, (j, horsM, we, an, mo) => {
-        if (horsM) {
-          return `<div class="cellule-admin hors-mois-admin"><div class="num-admin">${j}</div></div>`;
-        }
-
-        if (we) {
-          const gris = Array(8).fill(`<div class="creneau-admin" style="background:var(--gris-bord)"></div>`).join("");
-          const demi = Array(4).fill(`<div class="creneau-admin" style="background:var(--gris-bord)"></div>`).join("");
-          return `
-            <div class="cellule-admin weekend" title="Week-end">
-              <div class="num-admin">${j}</div>
-              <div class="creneaux-admin">
-                <div class="creneaux-admin-bloc">${demi}</div>
-                <div class="creneaux-admin-bloc">${demi}</div>
-              </div>
-            </div>`;
-        }
-
-        const slots = lireSlots(an, mo, j);
-        const rendreBloc = (debut) => slots.slice(debut, debut+4).map((v, i) => {
-          const idx = debut + i;
-          const tooltip = (debut === 0 ? "Matin" : "AM") + ` créneau ${idx+1} · ${LIBELLES_ETATS[outilAdmin]}`;
-          return `<div class="creneau-admin"
-            style="background:${couleurCreneau(v)}"
-            onclick="basculerCreneau(event, ${an}, ${mo}, ${j}, ${idx})"
-            title="${tooltip}"
-          ></div>`;
-        }).join("");
-
-        return `
-          <div class="cellule-admin" title="Jour ${j}">
-            <div class="num-admin">${j}</div>
-            <div class="creneaux-admin">
-              <div class="creneaux-admin-bloc">${rendreBloc(0)}</div>
-              <div class="creneaux-admin-bloc">${rendreBloc(4)}</div>
-            </div>
-          </div>`;
-      });
+  /* --- Tarifs --- */
+  function afficherPaliers() {
+    document.getElementById("grille-paliers").innerHTML = PALIERS.map((p, i) => `
+      <div class="carte-palier ${i===palierSelectionne?"selectionne":""}" onclick="selectionnerPalier(${i})">
+        ${p.pop ? '<div class="badge-recommande">Plus choisi</div>' : ""}
+        <div class="nb-heures">${p.h}h</div>
+        <div class="nom-palier">${p.nom}</div>
+        <div class="taux-horaire">${p.taux}€<span> /h HT</span></div>
+        <div class="base-mensuelle">${(p.h*p.taux).toLocaleString("fr-FR")} €/mois</div>
+      </div>`).join("");
   }
 
-  function afficherStatsAdmin(annee, mois) {
-    const nbJours = new Date(annee, mois + 1, 0).getDate();
-    let libres = 0, partiels = 0, occupes = 0;
+  function afficherDurees() {
+    document.getElementById("grille-durees").innerHTML = DUREES.map((d, i) => `
+      <button class="btn-duree ${i===dureeSelectionnee?"actif":""}" onclick="selectionnerDuree(${i})">
+        ${d.label}
+        <div class="remise-label ${d.remise>0?"avec-remise":""}">
+          ${d.remise>0 ? "-"+d.remise+"% sur le total" : "Tarif plein"}
+        </div>
+      </button>`).join("");
+  }
 
-    for (let j = 1; j <= nbJours; j++) {
-      if ([0, 6].includes(new Date(annee, mois, j).getDay())) continue;
-      const e = lireCreneauCal(annee, mois, j);
-      if (e === "free") libres++;
-      else if (e === "partial") partiels++;
-      else if (e === "busy") occupes++;
-    }
-
-    document.getElementById("stats-mois").innerHTML = `
-      <div class="carte-stat">
-        <div class="chiffre-stat" style="color: var(--vert)">${libres}</div>
-        <div class="libelle-stat">Jours libres</div>
+  function afficherResultat() {
+    const p = PALIERS[palierSelectionne], d = DUREES[dureeSelectionnee];
+    const totalBrut = p.h * p.taux * d.mois;
+    const totalHT   = Math.round(totalBrut * (1 - d.remise / 100));
+    const mensHT    = Math.round(totalHT / d.mois);
+    const mensTTC   = Math.round(mensHT * (1 + TAUX_TVA));
+    const eco       = d.remise > 0 ? Math.round(totalBrut - totalHT) : 0;
+    document.getElementById("boite-resultat").innerHTML = `
+      <div class="ligne-resultat"><span class="lbl-resultat">Palier sélectionné</span><span class="val-resultat">${p.h}h/mois · ${p.taux} € HT/h</span></div>
+      <div class="ligne-resultat"><span class="lbl-resultat">Engagement</span><span class="val-resultat">${d.label}${d.remise>0?" &nbsp;·&nbsp; −"+d.remise+"% sur le total":""}</span></div>
+      <div class="separateur-resultat"></div>
+      <div class="ligne-total"><span class="lbl-total">Mensualité HT</span><span class="val-total">${mensHT.toLocaleString("fr-FR")} €</span></div>
+      <div class="ligne-ttc">
+        <span class="lbl-ttc">soit ${mensTTC.toLocaleString("fr-FR")} € TTC / mois</span>
+        ${d.mois>1 ? `<span class="val-ttc">Total ${d.mois} mois : ${totalHT.toLocaleString("fr-FR")} € HT</span>` : ""}
       </div>
-      <div class="carte-stat">
-        <div class="chiffre-stat" style="color: var(--orange)">${partiels}</div>
-        <div class="libelle-stat">Jours partiels</div>
-      </div>
-      <div class="carte-stat">
-        <div class="chiffre-stat" style="color: var(--rouge)">${occupes}</div>
-        <div class="libelle-stat">Jours occupés</div>
-      </div>
-    `;
+      ${eco>0 ? `<div class="mention-economie"><i class="ti ti-piggy-bank"></i> Économie sur la période : ${eco.toLocaleString("fr-FR")} €</div>` : ""}
+      <div class="separateur-resultat"></div>
+      <p class="note-tva">* TVA 20% applicable. Les montants TTC sont indiqués à titre indicatif.</p>`;
   }
 
-  function afficherOutilsAdmin() {
-    document.getElementById("outils-saisie").innerHTML = ETATS_ADMIN.map(etat => `
-      <button
-        class="btn-outil ${etat === outilAdmin ? "outil-actif" : ""}"
-        onclick="choisirOutil('${etat}')"
-      >
-        <div class="puce-outil" style="background: ${COULEURS_OUTILS[etat]}"></div>
-        ${LIBELLES_ETATS[etat]}
-      </button>
-    `).join("");
-  }
-
-  function choisirOutil(etat) {
-    outilAdmin = etat;
-    afficherOutilsAdmin();
-  }
-
-  // Bascule un créneau individuel (0-7) selon l'outil actif
-  function basculerCreneau(event, annee, mois, jour, index) {
-    event.stopPropagation();
-    const valeur = (outilAdmin === "free") ? 1 : 0;
-    ecrireSlot(annee, mois, jour, index, valeur);
-    afficherCalendrierAdmin();
-    document.getElementById("msg-sauvegarde").style.display = "none";
-  }
-
-  // Conservé pour compatibilité (clic sur toute la cellule = toggle tout le jour)
-  function basculerJour(annee, mois, jour) {
-    ecrireCreneauCal(annee, mois, jour, outilAdmin);
-    afficherCalendrierAdmin();
-    document.getElementById("msg-sauvegarde").style.display = "none";
-  }
-
-  function changerMoisAdmin(direction) {
-    dateMoisAdmin.setMonth(dateMoisAdmin.getMonth() + direction);
-    afficherCalendrierAdmin();
-  }
-
-  async function sauvegarderPlanning() {
-    try {
-      if (window.storage) {
-        await window.storage.set("etudesfc_cal", JSON.stringify(donneesCal));
-      }
-    } catch (e) { /* stockage non disponible */ }
-
-    // Aussi mettre à jour le calendrier client
-    afficherCalendrierClient();
-
-    // Afficher la confirmation
-    const msg = document.getElementById("msg-sauvegarde");
-    msg.style.display = "flex";
-    setTimeout(() => { msg.style.display = "none"; }, 3000);
-  }
-
-  function reinitialiserMois() {
-    const annee = dateMoisAdmin.getFullYear();
-    const mois  = dateMoisAdmin.getMonth();
-    if (confirm("Réinitialiser tous les créneaux de ce mois ?")) {
-      donneesCal[cle(annee, mois)] = {};
-      afficherCalendrierAdmin();
-    }
-  }
-
-  /* ==================================================================
-     CONNEXION ADMIN
-  ================================================================== */
-
-  function seConnecter() {
-    const identifiant = document.getElementById("champ-identifiant").value.trim();
-    const motDePasse  = document.getElementById("champ-motdepasse").value;
-    const msgErreur   = document.getElementById("msg-erreur-connexion");
-
-    if (identifiant === ADMIN_IDENTIFIANT && motDePasse === ADMIN_MOT_DE_PASSE) {
-      // Connexion réussie
-      document.getElementById("portail-connexion").style.display = "none";
-      document.getElementById("panneau-admin-connecte").style.display = "block";
-      msgErreur.style.display = "none";
-      afficherOutilsAdmin();
-      afficherCalendrierAdmin();
-    } else {
-      // Identifiants incorrects
-      msgErreur.style.display = "block";
-      document.getElementById("champ-motdepasse").value = "";
-      document.getElementById("champ-motdepasse").focus();
-    }
-  }
-
-  function seDeconnecter() {
-    document.getElementById("portail-connexion").style.display = "block";
-    document.getElementById("panneau-admin-connecte").style.display = "none";
-    document.getElementById("msg-erreur-connexion").style.display = "none";
-    document.getElementById("champ-identifiant").value = "";
-    document.getElementById("champ-motdepasse").value = "";
-  }
-
-  /* ==================================================================
-     NAVIGATION ENTRE ONGLETS
-  ================================================================== */
+  function selectionnerPalier(i) { palierSelectionne = i; afficherPaliers(); afficherResultat(); }
+  function selectionnerDuree(i)  { dureeSelectionnee = i; afficherDurees();  afficherResultat(); }
 
   function afficherOnglet(nom, bouton) {
-    // Masquer tous les panneaux
     document.querySelectorAll(".panneau").forEach(p => p.classList.remove("actif"));
-    // Désactiver tous les onglets
     document.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("actif"));
-
-    // Activer le panneau et l'onglet cliqués
     document.getElementById("panneau-" + nom).classList.add("actif");
     bouton.classList.add("actif");
-
-    // Initialisation à la première ouverture
-    if (nom === "planning") afficherCalendrierClient();
-    if (nom === "admin")    afficherCalendrierAdmin();
+    if (nom === "planning") chargerPlanning();
   }
 
-  /* ==================================================================
-     INITIALISATION AU CHARGEMENT DE LA PAGE
-  ================================================================== */
-
-  (async function initialiser() {
-    initialiserDemonstration();
-    await chargerSauvegarde();
-    afficherPaliers();
-    afficherDurees();
-    afficherResultat();
-  })();
+  /* --- Init --- */
+  afficherPaliers();
+  afficherDurees();
+  afficherResultat();
 
 </script>
-
 </body>
 </html>
