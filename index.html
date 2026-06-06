@@ -295,10 +295,10 @@
   function lireSlots(annee, mois, jour) {
     const val = (donneesCal[cle(annee, mois)] || {})[jour];
     if (Array.isArray(val)) return val;
-    if (val === "busy")       return [0,0,0,0,0,0,0,0];
-    if (val === "partial-am") return [1,1,1,1,0,0,0,0];
-    if (val === "partial-pm") return [0,0,0,0,1,1,1,1];
-    return [1,1,1,1,1,1,1,1];
+    if (val === "busy")       return [0,0,0,0,0,0,0,2];
+    if (val === "partial-am") return [1,1,1,1,0,0,0,2];
+    if (val === "partial-pm") return [0,0,0,0,1,1,1,2];
+    return [1,1,1,1,1,1,1,2];
   }
 
   function lireCreneauClient(annee, mois, jour) {
