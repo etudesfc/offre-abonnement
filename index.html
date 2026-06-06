@@ -128,9 +128,9 @@
     .compteur-entete { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
     .compteur-label { font-size: 12px; font-weight: 600; color: var(--gris-texte); text-transform: uppercase; letter-spacing: 0.05em; }
     .compteur-valeurs { display: flex; align-items: baseline; gap: 4px; }
-    .compteur-heures-occupees { font-size: 20px; font-weight: 700; }
-    .compteur-heures-max { font-size: 12px; color: var(--gris-texte); }
-    .compteur-heures-libres { font-size: 12px; font-weight: 500; color: var(--vert); margin-left: 8px; }
+    .compteur-heures-occupees { font-size: 16px; font-weight: 600; }
+    .compteur-heures-max { font-size: 16px; font-weight: 600; color: var(--rouge); }
+    .compteur-heures-libres { font-size: 16px; font-weight: 600; color: var(--bleu-fonce); margin-left: 8px; }
     .barre-charge-fond { width: 100%; height: 10px; background: #E0E8F0; border-radius: 6px; overflow: hidden; }
     .barre-charge-remplissage { height: 100%; border-radius: 6px; transition: width 0.4s ease; }
     .compteur-detail { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--gris-texte); }
@@ -449,7 +449,7 @@
         <div class="compteur-valeurs">
           <span class="compteur-heures-occupees" style="color:${couleur}">${occupes}h</span>
           <span class="compteur-heures-max">/ ${maxCreneaux}h max</span>
-          <span class="compteur-heures-libres">· ${Math.max(0,maxCreneaux-occupes)}h disponibles</span>
+          <span class="compteur-heures-libres">· ${Math.max(0,maxCreneaux-occupes)}h restantes</span>
         </div>
       </div>
       <div class="barre-charge-fond"><div class="barre-charge-remplissage" style="width:${pct}%;background:${couleur}"></div></div>
