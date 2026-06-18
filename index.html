@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETUDES FC – Offre d'Abonnement</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.29.0/tabler-icons.min.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; }
+
+    .page-a4 {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      background: #ffffff;
+      border-radius: 6px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    :root {
+      --bleu-fonce:  #0D3A6E;
+      --bleu-moyen:  #185FA5;
+      --bleu-clair:  #E6F1FB;
+      --vert:        #1D9E75;
+      --violet:      #6A3CB8;
+      --orange:      #ff9900;
+      --bleu-ciel:   #05e2ffe5;
+      --rouge:       #E24B4A;
+      --gris-fond:   #F5F7FA;
+      --gris-bord:   #DEE3EB;
+      --gris-texte:  #6B7A8D;
+      --texte:       #1A2636;
+    }
+
+    .header { display: flex; background: var(--bleu-fonce); }
+    .header-left { flex: 1; padding: 22px 28px; }
+    .header-left .entreprise { font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; }
+    .header-left .activite { font-size: 13px; color: #A8C4E0; margin-top: 2px; }
+    .header-left .titre-offre { font-size: 14px; font-weight: 600; color: var(--bleu-clair); margin-top: 8px; }
+    .header-right { background: var(--bleu-moyen); padding: 22px 28px; display: flex; flex-direction: column; justify-content: center; gap: 4px; min-width: 240px; }
+    .header-right p { font-size: 13px; color: #ffffff; display: flex; align-items: center; gap: 8px; }
+    .header-right p i { color: #A8C4E0; font-size: 15px; }
+
+    .nav-tabs { display: flex; border-bottom: 1px solid var(--gris-bord); padding: 0 24px; background: #fff; }
+    .nav-tab { padding: 14px 20px; font-size: 13px; font-weight: 500; border: none; background: none; cursor: pointer; color: var(--gris-texte); border-bottom: 2px solid transparent; margin-bottom: -1px; display: flex; align-items: center; gap: 7px; transition: color 0.15s; }
+    .nav-tab:hover { color: var(--bleu-moyen); }
+    .nav-tab.actif { color: var(--bleu-moyen); border-bottom: 2px solid var(--bleu-moyen); }
+
+    .contenu { padding: 24px 28px 28px; }
+    .panneau { display: none; }
+    .panneau.actif { display: block; }
+    .titre-section { font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gris-texte); margin-bottom: 10px; }
+
+    /* Tarifs */
+    .grille-paliers { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 20px; }
+    .carte-palier { background: #fff; border: 1px solid var(--gris-bord); border-radius: 8px; padding: 14px 8px 12px; cursor: pointer; position: relative; text-align: center; transition: border-color 0.15s, box-shadow 0.15s; }
+    .carte-palier:hover { border-color: var(--bleu-moyen); box-shadow: 0 2px 8px rgba(24,95,165,0.1); }
+    .carte-palier.selectionne { border: 2px solid var(--bleu-moyen); background: var(--bleu-clair); }
+    .badge-recommande { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bleu-moyen); color: #fff; font-size: 9.5px; font-weight: 600; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+    .carte-palier .nb-heures { font-size: 22px; font-weight: 600; color: var(--texte); }
+    .carte-palier .nom-palier { font-size: 11px; color: var(--gris-texte); margin-bottom: 6px; }
+    .carte-palier .taux-horaire { font-size: 15px; font-weight: 600; color: var(--bleu-moyen); }
+    .carte-palier .taux-horaire span { font-size: 11px; font-weight: 400; color: var(--gris-texte); }
+    .carte-palier .base-mensuelle { font-size: 11px; color: var(--gris-texte); margin-top: 3px; }
+    
+
+    .grille-durees { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
+    .btn-duree { border: 1px solid var(--gris-bord); background: #fff; border-radius: 7px; padding: 10px 6px; font-size: 13px; cursor: pointer; text-align: center; color: var(--texte); transition: border-color 0.15s; }
+    .btn-duree:hover { border-color: var(--bleu-moyen); }
+    .btn-duree.actif { border: 2px solid var(--bleu-moyen); color: var(--bleu-moyen); font-weight: 600; }
+    .remise-label { font-size: 10px; margin-top: 3px; color: var(--gris-texte); }
+    .remise-label.avec-remise { color: #0F6E56; }
+
+    .boite-resultat { background: var(--gris-fond); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; border: 1px solid var(--gris-bord); }
+    .ligne-resultat { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+    .lbl-resultat { font-size: 13px; color: var(--gris-texte); }
+    .val-resultat { font-size: 13px; font-weight: 500; color: var(--texte); }
+    .separateur-resultat { border-top: 1px solid var(--gris-bord); margin: 10px 0; }
+    .ligne-total { display: flex; justify-content: space-between; align-items: baseline; }
+    .lbl-total { font-size: 14px; font-weight: 600; color: var(--texte); }
+    .val-total { font-size: 26px; font-weight: 700; color: var(--bleu-moyen); }
+    .ligne-ttc { display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px; }
+    .lbl-ttc { font-size: 12px; color: var(--gris-texte); }
+    .val-ttc { font-size: 13px; color: var(--gris-texte); }
+    .mention-economie { font-size: 12px; color: #0F6E56; text-align: right; margin-top: 6px; }
+    .note-tva { font-size: 11px; color: var(--gris-texte); margin-top: 10px; font-style: italic; text-align: center; }
+
+    .grille-services { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 20px; }
+    .item-service { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--texte); font-weight: 500; }
+    .point-service { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Planning */
+    .entete-planning { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .nav-mois { display: flex; align-items: center; gap: 12px; }
+    .btn-nav-mois { background: none; border: 1px solid var(--gris-bord); border-radius: 6px; width: 30px; height: 30px; cursor: pointer; color: var(--texte); font-size: 16px; display: flex; align-items: center; justify-content: center; transition: border-color 0.15s; }
+    .btn-nav-mois:hover { border-color: var(--bleu-moyen); }
+    .label-mois { font-size: 16px; font-weight: 600; min-width: 160px; text-align: center; color: var(--texte); }
+    .legende { display: flex; gap: 14px; font-size: 12px; color: var(--gris-texte); }
+    .item-legende { display: flex; align-items: center; gap: 5px; }
+    .point-legende { width: 11px; height: 11px; border-radius: 3px; }
+    .stats-mois { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 20px; }
+    .carte-stat { background: var(--gris-fond); border-radius: 7px; padding: 12px; text-align: center; border: 1px solid var(--gris-bord); }
+    .chiffre-stat { font-size: 18px; font-weight: 700; }  
+    .libelle-stat { font-size: 11px; color: var(--gris-texte); margin-top: 4px; }
+
+    .tableau-cal { width: 100%; border-collapse: collapse; margin-bottom: 14px; table-layout: fixed; }
+    .tableau-cal th { font-size: 11px; font-weight: 600; text-align: center; color: var(--gris-texte); padding: 5px 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .tableau-cal td { padding: 2px; text-align: center; }
+    .cellule-jour { width: 100%; height: 56px; border-radius: 7px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; border: 1px solid var(--gris-bord); transition: border-color 0.1s, background 0.1s; }
+    .cellule-jour:hover:not(.hors-mois) { background: var(--gris-fond); }
+    .num-jour { font-size: 12px; font-weight: 600; color: var(--texte); }
+    .hors-mois .num-jour { color: #C0C8D4; }
+    .aujourdhui { border: 2px solid var(--bleu-moyen); }
+    .creneaux { display: flex; flex-direction: column; gap: 2px; margin-bottom: 2px; }
+    .creneaux-bloc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .creneau { width: 10px; height: 5px; border-radius: 2px; }
+
+    /* Bannière chargement planning */
+    .banniere-chargement { text-align: center; padding: 32px 0; font-size: 13px; color: var(--gris-texte); }
+    .banniere-chargement i { font-size: 24px; margin-bottom: 8px; display: block; animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .compteur-charge { margin-bottom: 14px; background: var(--gris-fond); border: 1px solid var(--gris-bord); border-radius: 8px; padding: 12px 16px; }
+    .compteur-entete { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .compteur-label { font-size: 12px; font-weight: 600; color: var(--gris-texte); text-transform: uppercase; letter-spacing: 0.05em; }
+    .compteur-valeurs { display: flex; align-items: baseline; gap: 4px; }
+    .compteur-heures-occupees { font-size: 16px; font-weight: 600; }
+    .compteur-heures-max { font-size: 16px; font-weight: 600; color: var(--rouge); }
+    .compteur-heures-libres { font-size: 16px; font-weight: 600; color: var(--bleu-fonce); margin-left: 8px; }
+    .barre-charge-fond { width: 100%; height: 10px; background: #E0E8F0; border-radius: 6px; overflow: hidden; }
+    .barre-charge-remplissage { height: 100%; border-radius: 6px; transition: width 0.4s ease; }
+    .compteur-detail { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--gris-texte); }
+
+    .note-planning { font-size: 12px; color: var(--gris-texte); padding-top: 12px; border-top: 1px solid var(--gris-bord); display: flex; align-items: flex-start; gap: 6px; }
+    .barre-contact { background: var(--gris-fond); border-radius: 7px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 14px; border: 1px solid var(--gris-bord); }
+    .barre-contact-texte { font-size: 13px; color: var(--gris-texte); line-height: 1.5; }
+    .barre-contact-texte strong { color: var(--texte); }
+    .btn-contact { background: var(--bleu-moyen); color: #fff; border: none; border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .btn-contact:hover { background: var(--bleu-fonce); }
+
+    .pied-page { border-top: 1px solid var(--gris-bord); padding: 14px 28px; font-size: 11px; color: var(--gris-texte); text-align: center; background: var(--gris-fond); }
+  
+  /* === CGV === */
+    .cgv-entete { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+    .cgv-corps { max-height:520px; overflow-y:auto; padding-right:8px; }
+    .cgv-intro { font-size:12.5px; color:var(--texte); line-height:1.75; margin-bottom:16px; background:var(--bleu-clair); border-left:3px solid var(--bleu-moyen); padding:12px 14px; border-radius:0 6px 6px 0; }
+    .cgv-article { margin-bottom:14px; }
+    .cgv-article-titre { font-size:13px; font-weight:700; color:var(--bleu-fonce); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+    .cgv-num { background:var(--bleu-moyen); color:#fff; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; letter-spacing:0.03em; }
+    .cgv-article p { font-size:12px; color:var(--texte); line-height:1.75; text-align:justify; }
+    .cgv-version { margin-top:18px; padding-top:12px; border-top:1px solid var(--gris-bord); font-size:11px; color:var(--gris-texte); text-align:center; font-style:italic; }
+    @media print { .nav-tabs, .btn-report-action, footer { display:none; } .cgv-corps { max-height:none; overflow:visible; } }
+
+  </style>
+</head>
+
+<body>
+<div class="page-a4">
+
+  <header class="header">
+    <div class="header-left">
+      <div class="entreprise">ETUDES FC</div>
+      <div class="activite">Bureau d'études mécanique</div>
+      <div class="titre-offre">Offre d'Abonnement</div>
+    </div>
+    <div class="header-right">
+      <p><i class="ti ti-building"></i> SARL ETUDES FC</p>
+      <p><i class="ti ti-phone"></i> 06 24 15 43 86</p>
+      <p><i class="ti ti-mail"></i> f.croisant@etudesfc.fr</p>
+      <p><i class="ti ti-user"></i> Frédéric CROISANT</p>
+    </div>
+  </header>
+
+ <nav class="nav-tabs">
+    <button class="nav-tab actif" onclick="afficherOnglet('tarifs', this)">
+      <i class="ti ti-receipt"></i> Tarifs
+    </button>
+    <button class="nav-tab" onclick="afficherOnglet('planning', this)">
+      <i class="ti ti-calendar"></i> Disponibilités
+    </button>
+    <button class="nav-tab" onclick="afficherOnglet('cgv', this)">
+      <i class="ti ti-file-text"></i> CGV
+    </button>
+  </nav>
+
+  <div class="contenu">
+
+    <!-- ONGLET TARIFS -->
+    <div id="panneau-tarifs" class="panneau actif">
+      <p class="titre-section">Volume mensuel d'heures</p>
+      <div class="grille-paliers" id="grille-paliers"></div>
+
+      <p class="titre-section">Durée d'engagement</p>
+      <div class="grille-durees" id="grille-durees"></div>
+
+      <div class="boite-resultat" id="boite-resultat"></div>
+
+      <p class="titre-section">Services inclus dans l'abonnement</p>
+      <div class="grille-services">
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Conception &amp; dimensionnement</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Modélisation 3D (CAO)</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Mise en plan 2D &amp; plans de fab.</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Visuels &amp; réalité augmentée</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Rédaction documentaire</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Support industrialisation</div>
+        <div class="item-service"><div class="point-service" style="background: var(--vert)"></div>Gestion de projet</div>
+      </div>
+    </div>
+
+    <!-- ONGLET DISPONIBILITÉS -->
+    <div id="panneau-planning" class="panneau">
+      <div class="entete-planning">
+        <div class="nav-mois">
+          <button class="btn-nav-mois" onclick="changerMois(-1)" aria-label="Mois précédent">&lsaquo;</button>
+          <div class="label-mois" id="label-mois-client"></div>
+          <button class="btn-nav-mois" onclick="changerMois(1)" aria-label="Mois suivant">&rsaquo;</button>
+      </div>
+        <!--<div class="legende">
+          <div class="item-legende"><div class="point-legende" style="background: var(--vert)"></div> Disponible</div>
+          <div class="item-legende"><div class="point-legende" style="background: var(--orange)"></div> Partiel</div>
+          <div class="item-legende"><div class="point-legende" style="background: var(--rouge)"></div> Occupé</div>
+          <div class="item-legende"><div class="point-legende" style="background: var(--gris-bord)"></div> W-E / Férié</div>
+        </div>-->
+      </div>
+
+      <div class="stats-mois" id="stats-mois-client"></div>
+
+      <div id="zone-calendrier">
+        <div class="banniere-chargement">
+          <i class="ti ti-loader-2"></i>
+          Chargement du planning…
+        </div>
+      </div>
+
+      <div class="compteur-charge" id="compteur-charge"></div>
+
+      <div class="note-planning">
+        <i class="ti ti-info-circle"></i>
+        Huit créneaux par journée en 2 blocs de 4 (1h chacun) : bloc matin (haut) et bloc après-midi (bas).
+        Planning mis à jour régulièrement par Frédéric.
+      </div>
+
+      <div class="barre-contact">
+        <div class="barre-contact-texte">
+          <strong>Une disponibilité vous convient ?</strong><br>
+          06 24 15 43 86 · f.croisant@etudesfc.fr
+        </div>
+        <button class="btn-contact" onclick="window.location.href='mailto:f.croisant@etudesfc.fr'">
+          Prendre contact ↗
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="pied-page">
+    ETUDES FC · Frédéric Croisant · f.croisant@etudesfc.fr · 06 24 15 43 86 ·
+    Devis personnalisé sous 24/48h
+  </footer>
+
+<!-- ONGLET CGV -->
+    <div id="panneau-cgv" class="panneau">
+      <div class="cgv-entete">
+        <p class="titre-section">Conditions Générales de Vente</p>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-report-action btn-secondaire" onclick="window.print()"><i class="ti ti-printer"></i> Imprimer</button>
+        </div>
+      </div>
+      <div class="cgv-corps">
+
+        <p class="cgv-intro">Les présentes Conditions Générales de Vente (ci-après « CGV ») régissent l'ensemble des relations contractuelles entre la société <strong>ETUDES FC</strong>, SARL au capital social inscrit au RCS, dont le siège social est situé à <strong>Pompaire (79200)</strong>, représentée par son gérant <strong>M. Frédéric CROISANT</strong> (ci-après « le Prestataire »), et tout professionnel (personne physique ou morale agissant dans le cadre de son activité professionnelle) souscrivant à une offre d'abonnement (ci-après « le Client »). Toute commande implique l'acceptation sans réserve des présentes CGV.</p>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 1</span> Objet</div>
+          <p>Les présentes CGV définissent les droits et obligations des parties dans le cadre de la fourniture de prestations d'ingénierie et d'études mécaniques par le Prestataire, commercialisées sous la forme d'un <strong>abonnement mensuel à volume horaire fixe</strong>. Les prestations comprennent notamment : conception et dimensionnement mécanique, modélisation 3D (CAO), mise en plan 2D et plans de fabrication, visuels et réalité augmentée, rédaction documentaire technique, support à l'industrialisation, et gestion de projet.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 2</span> Champ d'application — Clientèle professionnelle</div>
+          <p>Les offres d'abonnement d'ETUDES FC sont exclusivement destinées aux <strong>professionnels</strong> au sens de l'article liminaire du Code de la consommation. En conséquence, les dispositions protectrices applicables aux consommateurs — notamment le droit de rétractation prévu par les articles L. 221-18 et suivants du Code de la consommation — ne sont pas applicables. Les présentes CGV prévalent sur toutes conditions générales d'achat du Client, sauf accord écrit contraire signé par le Prestataire.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 3</span> Formation du contrat</div>
+          <p>Le contrat est formé par l'acceptation par le Client d'un devis ou d'une offre d'abonnement émis par le Prestataire, matérialisée par la signature du document ou par tout autre moyen écrit (courriel, bon de commande signé). Toute modification ultérieure doit faire l'objet d'un avenant écrit accepté par les deux parties.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 4</span> Paliers d'abonnement et tarifs</div>
+          <p>L'abonnement est souscrit pour un <strong>volume mensuel d'heures</strong> défini entre les parties parmi les paliers proposés (de 20h à 130h/mois). Le taux horaire HT applicable est celui en vigueur au jour de la signature de l'offre, fixé par palier selon le barème publié par le Prestataire.</p>
+          <p style="margin-top:8px;">Des <strong>remises sur le total de la période</strong> sont accordées en fonction de la durée d'engagement souscrite (3, 6 ou 12 mois). Ces remises sont acquises sous réserve du respect intégral de la durée d'engagement. Tous les prix s'entendent en euros hors taxes (HT). La TVA au taux légal en vigueur (actuellement 20 %) sera ajoutée sur la facture.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 5</span> Modalités de facturation et de paiement</div>
+          <p><strong>5.1 Facturation.</strong> La facturation est émise mensuellement, en début de période, pour le volume d'heures correspondant au palier souscrit. Une facture récapitulative est transmise au Client par voie électronique.</p>
+          <p style="margin-top:6px;"><strong>5.2 Paiement.</strong> Le règlement s'effectue exclusivement par <strong>virement bancaire</strong> sur le compte du Prestataire, dont les coordonnées figurent sur chaque facture. Le paiement est exigible à réception de la facture, sauf délai convenu par écrit entre les parties.</p>
+          <p style="margin-top:6px;"><strong>5.3 Retard de paiement.</strong> Conformément aux articles L. 441-10 et suivants du Code de commerce, tout retard de paiement entraîne de plein droit, sans mise en demeure préalable : (i) des pénalités de retard calculées au taux de 3 fois le taux d'intérêt légal en vigueur, à compter du jour suivant la date d'échéance ; (ii) une indemnité forfaitaire pour frais de recouvrement de <strong>40 €</strong>. Le Prestataire se réserve le droit de suspendre l'exécution des prestations en cours jusqu'au règlement intégral des sommes dues.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 6</span> Report des heures non consommées</div>
+          <p><strong>6.1 Principe.</strong> Les heures du palier mensuel souscrit non consommées au cours d'un mois civil donné sont <strong>intégralement reportées</strong> sur le mois suivant, avec une limitation de cumul à 20h/mois.</p>
+          <p style="margin-top:6px;"><strong>6.2 Comptabilisation.</strong> ETUDES FC tient le décompte des heures consommées et adresse au Client un <strong>relevé mensuel</strong> récapitulant : le volume du palier, le report entrant de la période précédente, les heures effectivement consommées et le solde reporté sur le mois suivant. Ce relevé fait foi entre les parties, sauf contestation motivée adressée par écrit dans un délai de <strong>15 jours</strong> suivant sa réception.</p>
+          <p style="margin-top:6px;"><strong>6.3 Sort des heures reportées en cas de résiliation.</strong> En cas de fin de contrat à l'initiative du Client (hors faute du Prestataire), les heures reportées non consommées ne donnent pas lieu à remboursement, sauf accord contraire écrit entre les parties.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 7</span> Durée d'engagement et résiliation</div>
+          <p><strong>7.1 Durée.</strong> L'abonnement est conclu pour la durée d'engagement choisie lors de la souscription (1, 3, 6 ou 12 mois). À l'issue de cette période, le contrat prend fin automatiquement : <strong>il n'y a pas de renouvellement tacite</strong>. Toute reconduction doit faire l'objet d'un nouvel accord entre les parties.</p>
+          <p style="margin-top:6px;"><strong>7.2 Résiliation anticipée par le Client.</strong> En cas de résiliation avant le terme de la durée d'engagement convenue, le Client est redevable de l'intégralité des heures non encore facturées sur la période restante, calculées au <strong>taux plein HT</strong> du palier souscrit, sans application d'aucune remise. Cette somme est immédiatement exigible.</p>
+          <p style="margin-top:6px;"><strong>7.3 Résiliation pour manquement.</strong> En cas de manquement grave de l'une des parties à ses obligations, l'autre partie peut résilier le contrat de plein droit, par courriel avec accusé de réception, après une mise en demeure restée sans effet pendant <strong>15 jours</strong>.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 8</span> Propriété intellectuelle des livrables</div>
+          <p><strong>8.1 Droits pendant la mission.</strong> Tous les livrables produits par le Prestataire (plans, modèles 3D, documents techniques, visuels, etc.) demeurent la propriété intellectuelle exclusive d'ETUDES FC jusqu'au <strong>paiement intégral</strong> des sommes dues au titre de la période concernée.</p>
+          <p style="margin-top:6px;"><strong>8.2 Licence d'utilisation immédiate.</strong> Dès la livraison des documents, le Client bénéficie d'une <strong>licence d'utilisation immédiate</strong> à titre non exclusif, pour ses besoins propres, dans le cadre de son activité professionnelle. Cette licence ne comprend pas le droit de sous-licencier, de céder, ou d'exploiter commercialement les livrables au bénéfice de tiers.</p>
+          <p style="margin-top:6px;"><strong>8.3 Transfert de propriété.</strong> Le transfert définitif de la propriété des livrables intervient à la date du paiement intégral des factures correspondantes. À compter de ce transfert, le Client dispose de tous les droits d'utilisation, de reproduction et de modification pour ses besoins professionnels.</p>
+          <p style="margin-top:6px;"><strong>8.4 Confidentialité.</strong> Le Prestataire s'engage à traiter avec confidentialité toutes les informations techniques, commerciales ou stratégiques du Client auxquelles il serait amené à accéder dans le cadre de la mission.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 9</span> Obligations des parties</div>
+          <p><strong>9.1 Obligations du Prestataire.</strong> Le Prestataire s'engage à réaliser les prestations commandées avec le soin et la diligence attendus d'un professionnel de l'ingénierie mécanique, dans le respect des délais convenus. Il dispose d'une <strong>obligation de moyens</strong>.</p>
+          <p style="margin-top:6px;"><strong>9.2 Obligations du Client.</strong> Le Client s'engage à : fournir en temps utile toutes les informations, données, cahiers des charges et éléments nécessaires à la bonne exécution des prestations ; désigner un interlocuteur référent ; valider les livrables dans un délai raisonnable. Tout retard imputable au Client dans la fourniture des éléments nécessaires peut entraîner un décalage de délai sans pénalité pour le Prestataire.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 10</span> Responsabilité</div>
+          <p>La responsabilité du Prestataire est engagée dans les conditions du droit commun (articles 1240 et suivants du Code civil). Aucun plafond contractuel n'est stipulé, et la responsabilité d'ETUDES FC ne peut être engagée qu'en cas de faute prouvée. En tout état de cause, le Prestataire ne saurait être tenu responsable des dommages indirects (perte de chiffre d'affaires, perte de marché, etc.), ni des conséquences d'une utilisation des livrables non conforme à leur destination ou dans un contexte non prévu lors de la commande. La responsabilité du Client demeure entière quant aux choix de validation finale et à la mise en production des études livrées.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 11</span> Force majeure</div>
+          <p>Aucune partie ne pourra être tenue pour responsable d'un retard ou d'une inexécution résultant d'un événement de force majeure au sens de l'article 1218 du Code civil (catastrophe naturelle, pandémie, cyberattaque majeure, etc.). La partie concernée devra en informer l'autre sans délai. Si la situation persiste au-delà de <strong>30 jours</strong>, chacune des parties pourra résilier le contrat sans indemnité.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 12</span> Protection des données personnelles</div>
+          <p>Les données personnelles collectées dans le cadre des relations contractuelles (nom, coordonnées, données de facturation) sont traitées par ETUDES FC en qualité de responsable de traitement, conformément au Règlement Général sur la Protection des Données (RGPD – Règlement UE 2016/679) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée. Ces données sont utilisées exclusivement aux fins d'exécution du contrat et de gestion de la relation client. Le Client dispose d'un droit d'accès, de rectification et d'effacement auprès de : f.croisant@etudesfc.fr.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 13</span> Droit applicable et juridiction compétente</div>
+          <p>Les présentes CGV sont soumises au <strong>droit français</strong>. En cas de litige relatif à leur interprétation ou à leur exécution, et après tentative de résolution amiable dans un délai de <strong>30 jours</strong> à compter de la notification du différend, les parties attribuent compétence exclusive au <strong>Tribunal de Commerce de Niort</strong>, y compris en cas de pluralité de défendeurs ou d'appel en garantie.</p>
+        </div>
+
+        <div class="cgv-article">
+          <div class="cgv-article-titre"><span class="cgv-num">Art. 14</span> Dispositions diverses</div>
+          <p>Si l'une des clauses des présentes CGV était déclarée nulle ou inapplicable, les autres clauses demeureraient en vigueur. Le fait pour le Prestataire de ne pas se prévaloir d'un manquement du Client à l'une de ses obligations ne saurait être interprété comme une renonciation à s'en prévaloir ultérieurement. Les présentes CGV annulent et remplacent toutes conditions antérieures.</p>
+        </div>
+
+        <div class="cgv-version">
+          Version 1.0 — Juin 2025 · ETUDES FC · SARL · f.croisant@etudesfc.fr · 06 24 15 43 86
+        </div>
+      </div>
+    </div>
+
+  </div><!-- fin .contenu -->
+    ETUDES FC · Frédéric Croisant · f.croisant@etudesfc.fr · 06 24 15 43 86 ·
+    Devis personnalisé sous 24/48h
+  </footer>
+
+</div>
+
+<script>
+
+  /* ==============================================================
+     CONFIGURATION TARIFS — modifiez uniquement ce bloc
+  ============================================================== */
+  const PALIERS = [
+    { h: 20,  taux: 40, nom: "Starter",   pop: false },
+    { h: 40,  taux: 38, nom: "Essentiel", pop: false },
+    { h: 60,  taux: 36, nom: "Régulier",  pop: false },
+    { h: 80,  taux: 35, nom: "Complet",   pop: false },
+    { h: 100, taux: 34, nom: "Intensif",  pop: false },
+    { h: 130, taux: 33, nom: "Maximum",   pop: false },
+  ];
+
+  const DUREES = [
+    { label: "1 mois",  mois: 1,  remise: 0 },
+    { label: "3 mois",  mois: 3,  remise: 2 },
+    { label: "6 mois",  mois: 6,  remise: 4 },
+    { label: "12 mois", mois: 12, remise: 8 },
+  ];
+
+  const TAUX_TVA = 0.20;
+
+  /*
+   * URL du fichier planning.json publié par l'outil admin.
+   * Remplacez par votre URL GitHub Pages réelle, par exemple :
+   * https://votre-compte.github.io/votre-depot/planning.json
+   */
+  const URL_PLANNING = "planning.json";
+
+  /* ==============================================================
+     FIN CONFIGURATION
+  ============================================================== */
+
+  let palierSelectionne = 2;
+  let dureeSelectionnee = 0;
+  let dateMoisClient = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+  let donneesCal = {};
+  const MAX_HEURES = 130;
+
+  /* --- Utilitaires calendrier --- */
+  function cle(a, m) { return a + "-" + m; }
+
+  function lireSlots(annee, mois, jour) {
+    const val = (donneesCal[cle(annee, mois)] || {})[jour];
+    if (Array.isArray(val)) return val;
+    if (val === "busy")       return [0,0,0,0,0,0,0,2];
+    if (val === "partial-am") return [1,1,1,1,0,0,0,2];
+    if (val === "partial-pm") return [0,0,0,0,1,1,1,2];
+    return [1,1,1,1,1,1,1,2];
+  }
+
+  function lireCreneauClient(annee, mois, jour) {
+    const s = lireSlots(annee, mois, jour);
+    const consider = s.filter(v => v !== 2);
+    if (consider.length === 0) return "partial";
+    const libres = consider.filter(v => v === 1).length;
+    const occ = consider.filter(v => v === 0).length;
+    if (libres === consider.length) return "free";
+    if (occ === consider.length) return "busy";
+    return "partial";
+  }
+
+  function couleurCreneau(v) {
+    if (v === 1)  return "var(--vert)";
+    if (v === 0)  return "var(--rouge)";
+    if (v === 2)  return "var(--violet)";
+    if (v === 3)  return "var(--bleu-ciel)";
+    return "var(--gris-bord)";
+  }
+
+  function afficherStatsClient(annee, mois) {
+    const nbJours = new Date(annee, mois + 1, 0).getDate();
+    let libres = 0, partiels = 0, occupes = 0;
+    let heuresGestion = 0;
+    let joursConge = 0;
+    for (let j = 1; j <= nbJours; j++) {
+      if ([0, 6].includes(new Date(annee, mois, j).getDay())) continue;
+      const e = lireCreneauClient(annee, mois, j);
+      if (e === "free") libres++;
+      else if (e === "partial") partiels++;
+      else occupes++;
+      const slots = lireSlots(annee, mois, j);
+      slots.forEach(v => {
+        if (v === 2) heuresGestion++;
+        if (v === 3) joursConge += 0.125;
+      });
+    }
+    const congeAffichage = Number(joursConge.toFixed(3)).toString().replace(/\.0+$/, "");
+    document.getElementById("stats-mois-client").innerHTML = `
+      <div class="carte-stat"><div class="chiffre-stat" style="color:var(--vert)">${libres}</div><div class="libelle-stat">Jours libres</div></div>
+      <div class="carte-stat"><div class="chiffre-stat" style="color:var(--orange)">${partiels}</div><div class="libelle-stat">Jours partiels</div></div>
+      <div class="carte-stat"><div class="chiffre-stat" style="color:var(--rouge)">${occupes}</div><div class="libelle-stat">Jours occupés</div></div>
+      <div class="carte-stat"><div class="chiffre-stat" style="color:var(--violet)">${heuresGestion}</div><div class="libelle-stat">Heures Gestion</div></div>
+      <div class="carte-stat"><div class="chiffre-stat" style="color:var(--bleu-ciel)">${congeAffichage}</div><div class="libelle-stat">Jours Congés</div></div>`;
+  }
+
+  /* --- Chargement planning depuis JSON --- */
+  async function chargerPlanning() {
+    try {
+      const r = await fetch(URL_PLANNING + "?t=" + Date.now());
+      if (r.ok) {
+        donneesCal = await r.json();
+      }
+    } catch (e) {
+      // Fichier absent ou hors-ligne : planning vide, pas d'erreur bloquante
+    }
+    afficherCalendrierClient();
+  }
+
+  /* --- Calendrier client --- */
+  function construireCorpsCalendrier(annee, mois, rendreCellule) {
+    const premierJour = new Date(annee, mois, 1);
+    let jourSemaine = (premierJour.getDay() + 6) % 7;
+    const nbJours     = new Date(annee, mois + 1, 0).getDate();
+    const nbJoursPrev = new Date(annee, mois, 0).getDate();
+    const aujourdhui  = new Date();
+    let html = "", cellule = 0, ligne = "<tr>";
+
+    for (let i = 0; i < jourSemaine; i++) {
+      ligne += `<td>${rendreCellule(nbJoursPrev - jourSemaine + 1 + i, true, false, annee, mois)}</td>`;
+      cellule++;
+    }
+    for (let j = 1; j <= nbJours; j++) {
+      const we = [0, 6].includes(new Date(annee, mois, j).getDay());
+      const auj = aujourdhui.getDate()===j && aujourdhui.getMonth()===mois && aujourdhui.getFullYear()===annee;
+      ligne += `<td>${rendreCellule(j, false, we, annee, mois, auj)}</td>`;
+      cellule++;
+      if (cellule % 7 === 0) { html += ligne + "</tr>"; ligne = "<tr>"; }
+    }
+    let extra = 1;
+    while (cellule % 7 !== 0) {
+      ligne += `<td>${rendreCellule(extra++, true, false, annee, mois)}</td>`;
+      cellule++;
+    }
+    if (ligne !== "<tr>") html += ligne + "</tr>";
+    return html;
+  }
+
+  function afficherCalendrierClient() {
+    const annee = dateMoisClient.getFullYear();
+    const mois  = dateMoisClient.getMonth();
+
+    document.getElementById("label-mois-client").textContent =
+      dateMoisClient.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })
+                    .replace(/^\w/, c => c.toUpperCase());
+
+    const corps = construireCorpsCalendrier(annee, mois, (j, horsM, we, an, mo, auj) => {
+      if (horsM) return `<div class="cellule-jour hors-mois"><div class="num-jour">${j}</div></div>`;
+      const slots = we ? [-1,-1,-1,-1,-1,-1,-1,-1] : lireSlots(an, mo, j);
+      const b1 = slots.slice(0,4).map(v => `<div class="creneau" style="background:${couleurCreneau(we?-1:v)}"></div>`).join("");
+      const b2 = slots.slice(4,8).map(v => `<div class="creneau" style="background:${couleurCreneau(we?-1:v)}"></div>`).join("");
+      return `<div class="cellule-jour ${auj?"aujourdhui":""}">
+        <div class="num-jour">${j}</div>
+        <div class="creneaux">
+          <div class="creneaux-bloc">${b1}</div>
+          <div class="creneaux-bloc">${b2}</div>
+        </div>
+      </div>`;
+    });
+
+    document.getElementById("zone-calendrier").innerHTML = `
+      <table class="tableau-cal">
+        <thead><tr>
+          <th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th>
+          <th style="color:#C0C8D4">Sam</th><th style="color:#C0C8D4">Dim</th>
+        </tr></thead>
+        <tbody>${corps}</tbody>
+      </table>`;
+
+    afficherStatsClient(annee, mois);
+    afficherCompteurCharge(annee, mois);
+  }
+
+  function afficherCompteurCharge(annee, mois) {
+    const el = document.getElementById("compteur-charge");
+    if (!el) return;
+    const nbJours = new Date(annee, mois + 1, 0).getDate();
+    let occupes = 0, libres = 0, gestion = 0, conges = 0, totalCreneaux = 0;
+    for (let j = 1; j <= nbJours; j++) {
+      if ([0, 6].includes(new Date(annee, mois, j).getDay())) continue;
+      const slots = lireSlots(annee, mois, j);
+      totalCreneaux += slots.length;
+      slots.forEach(v => {
+        if (v===0) occupes++;
+        else if (v===1) libres++;
+        else if (v===2) gestion++;
+        else if (v===3) conges++;
+      });
+    }
+    <!--const pct = Math.min(100, Math.round((occupes / MAX_HEURES) * 100));-->
+    const maxCreneaux = totalCreneaux - gestion - conges;
+    const pct = maxCreneaux > 0 ? Math.min(100, Math.round((occupes/maxCreneaux)*100)) : 0;
+    const couleur = pct < 60 ? "var(--vert)" : pct < 85 ? "var(--orange)" : "var(--rouge)";
+    el.innerHTML = `
+      <div class="compteur-entete">
+        <span class="compteur-label"><i class="ti ti-chart-bar"></i> Charge du mois</span>
+        <div class="compteur-valeurs">
+          <span class="compteur-heures-occupees" style="color:${couleur}">${occupes}h</span>
+          <span class="compteur-heures-max">/ ${maxCreneaux}h max</span>
+          <span class="compteur-heures-libres">· ${Math.max(0,maxCreneaux-occupes)}h restantes</span>
+        </div>
+      </div>
+      <div class="barre-charge-fond"><div class="barre-charge-remplissage" style="width:${pct}%;background:${couleur}"></div></div>
+      <!-- <div class="compteur-detail"><span>${pct}% de capacité utilisée</span><span>${libres}h de créneaux libres planifiés</span></div> -->`;
+  }
+
+  function changerMois(d) {
+    dateMoisClient.setMonth(dateMoisClient.getMonth() + d);
+    afficherCalendrierClient();
+  }
+
+  /* --- Tarifs --- */
+  function afficherPaliers() {
+    document.getElementById("grille-paliers").innerHTML = PALIERS.map((p, i) => `
+      <div class="carte-palier ${i===palierSelectionne?"selectionne":""}" onclick="selectionnerPalier(${i})">
+        ${p.pop ? '<div class="badge-recommande">Plus choisi</div>' : ""}
+        <div class="nb-heures">${p.h}h</div>
+        <div class="nom-palier">${p.nom}</div>
+        <div class="taux-horaire">${p.taux}€<span> /h HT</span></div>
+        <div class="base-mensuelle">${(p.h*p.taux).toLocaleString("fr-FR")} €/mois</div>
+      </div>`).join("");
+  }
+
+  function afficherDurees() {
+    document.getElementById("grille-durees").innerHTML = DUREES.map((d, i) => `
+      <button class="btn-duree ${i===dureeSelectionnee?"actif":""}" onclick="selectionnerDuree(${i})">
+        ${d.label}
+        <div class="remise-label ${d.remise>0?"avec-remise":""}">
+          ${d.remise>0 ? "-"+d.remise+"% sur le total" : "Tarif plein"}
+        </div>
+      </button>`).join("");
+  }
+
+  function afficherResultat() {
+    const p = PALIERS[palierSelectionne], d = DUREES[dureeSelectionnee];
+    const totalBrut = p.h * p.taux * d.mois;
+    const totalHT   = Math.round(totalBrut * (1 - d.remise / 100));
+    const mensHT    = Math.round(totalHT / d.mois);
+    const mensTTC   = Math.round(mensHT * (1 + TAUX_TVA));
+    const eco       = d.remise > 0 ? Math.round(totalBrut - totalHT) : 0;
+    document.getElementById("boite-resultat").innerHTML = `
+      <div class="ligne-resultat"><span class="lbl-resultat">Palier sélectionné</span><span class="val-resultat">${p.h}h/mois · ${p.taux} € HT/h</span></div>
+      <div class="ligne-resultat"><span class="lbl-resultat">Engagement</span><span class="val-resultat">${d.label}${d.remise>0?" &nbsp;·&nbsp; −"+d.remise+"% sur le total":""}</span></div>
+      <div class="separateur-resultat"></div>
+      <div class="ligne-total"><span class="lbl-total">Mensualité HT</span><span class="val-total">${mensHT.toLocaleString("fr-FR")} €</span></div>
+      <div class="ligne-ttc">
+        <span class="lbl-ttc">soit ${mensTTC.toLocaleString("fr-FR")} € TTC / mois</span>
+        ${d.mois>1 ? `<span class="val-ttc">Total ${d.mois} mois : ${totalHT.toLocaleString("fr-FR")} € HT</span>` : ""}
+      </div>
+      ${eco>0 ? `<div class="mention-economie"><i class="ti ti-piggy-bank"></i> Économie sur la période : ${eco.toLocaleString("fr-FR")} €</div>` : ""}
+      <div class="separateur-resultat"></div>
+      <p class="note-tva">* TVA 20% applicable. Les montants TTC sont indiqués à titre indicatif.</p>`;
+  }
+
+  function selectionnerPalier(i) { palierSelectionne = i; afficherPaliers(); afficherResultat(); }
+  function selectionnerDuree(i)  { dureeSelectionnee = i; afficherDurees();  afficherResultat(); }
+
+  function afficherOnglet(nom, bouton) {
+    document.querySelectorAll(".panneau").forEach(p => p.classList.remove("actif"));
+    document.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("actif"));
+    document.getElementById("panneau-" + nom).classList.add("actif");
+    bouton.classList.add("actif");
+    if (nom === "planning") chargerPlanning();
+  }
+
+  /* --- Init --- */
+  afficherPaliers();
+  afficherDurees();
+  afficherResultat();
+
+</script>
+</body>
+</html>
